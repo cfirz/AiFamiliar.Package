@@ -4,13 +4,14 @@ A powerful AI development assistant integrated directly into the Unity Editor �
 
 **No subscription. No credits. No markup.** Bring your own API key (Claude, GPT, or Gemini) or run a free local model — you pay your provider directly and see real per-message costs in-editor. It's a development assistant for your Editor workflow, **not** a runtime SDK for adding AI to your shipped game.
 
-<img width="2528" height="1696" alt="card" src="https://github.com/user-attachments/assets/cc3cf363-ad5d-4b4b-8834-9307de472a3d" />
+<img width="1264" height="848" alt="Card" src="https://github.com/user-attachments/assets/6809c412-aa43-4ff3-a3df-f30e015b88cf" />
 
 ## Why AI Familiar?
 
 Why not just use Cursor or Claude Code with a free Unity MCP bridge?
 
-- **No external tooling** — no Node install, no separate MCP server process, no second IDE to alt-tab to. It runs in the same window as your scene.
+- **No external tooling** — no Node install, no separate MCP server process, no second IDE to alt-tab to. It runs i![Uploading Card.png…]()
+n the same window as your scene.
 - **Read-only investigation by design** — every request starts by inspecting your project with read-only tools before anything is proposed.
 - **Every mutation is diff-reviewed** with one-click revert (Unity Undo-tracked).
 - **Editor-native** — it understands scenes, GameObjects, components, materials, and prefabs, not just text files.
