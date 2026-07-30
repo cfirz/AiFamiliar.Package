@@ -1,0 +1,161 @@
+/* ============================================================
+   ActivityCard.uss — Base shell shared by every card kind.
+   BEM naming: block = activity-card, element = __, modifier = --
+   Color palette matches the existing dark theme in AiFamiliarWindow.uss.
+   ============================================================ */
+
+/* ---- Block ---- */
+.activity-card {
+    flex-direction: column;
+    border-radius: 6px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--aifam-border);
+    border-bottom-color: var(--aifam-border);
+    border-left-color: var(--aifam-border);
+    border-right-color: var(--aifam-border);
+    background-color: var(--aifam-surface-raised);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    overflow: hidden;
+}
+
+/* ---- Header ---- */
+.activity-card__header {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    cursor: link;
+    flex-shrink: 0;
+}
+
+/* ---- Icon ---- */
+.activity-card__icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    -unity-text-align: middle-center;
+    color: var(--aifam-text-muted);
+}
+
+/* ---- Title ---- */
+.activity-card__title {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: var(--aifam-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---- State badge slot ---- */
+.activity-card__badge-slot {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-left: 6px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- Timer ---- */
+.activity-card__timer {
+    font-size: 10px;
+    color: var(--aifam-text-faint);
+    margin-left: 8px;
+    flex-shrink: 0;
+    -unity-font-style: normal;
+}
+
+/* ---- Chevron ---- */
+.activity-card__chevron {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    margin-left: 4px;
+    font-size: 11px;
+    color: var(--aifam-text-faint);
+    -unity-text-align: middle-center;
+}
+
+/* ---- Body ---- */
+.activity-card__body {
+    flex-direction: column;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top-width: 1px;
+    border-top-color: var(--aifam-border);
+}
+
+/* ============================================================
+   Modifier: collapsed
+   ============================================================ */
+.activity-card--collapsed .activity-card__body {
+    display: none;
+}
+
+.activity-card--collapsed .activity-card__chevron {
+    /* Unicode RIGHT-POINTING SMALL TRIANGLE — set via C# text property */
+}
+
+/* ============================================================
+   State modifiers — left accent stripe via left border override.
+   Base border is 1px; accent uses 3px on the left side only.
+   ============================================================ */
+
+/* Pending: muted gray — no stripe, just dimmed border */
+.activity-card--pending {
+    border-left-color: var(--aifam-border-strong);
+    border-left-width: 3px;
+}
+
+/* Running: blue accent */
+.activity-card--running {
+    border-left-color: var(--aifam-accent);
+    border-left-width: 3px;
+}
+
+/* Blocked: amber — waiting on user */
+.activity-card--blocked {
+    border-left-color: var(--aifam-warning);
+    border-left-width: 3px;
+}
+
+/* Succeeded: green */
+.activity-card--succeeded {
+    border-left-color: var(--aifam-success);
+    border-left-width: 3px;
+}
+
+/* Failed: red */
+.activity-card--failed {
+    border-left-color: var(--aifam-error);
+    border-left-width: 3px;
+}
+
+/* Skipped: dim gray */
+.activity-card--skipped {
+    border-left-color: var(--aifam-text-faint);
+    border-left-width: 3px;
+    opacity: 0.7;
+}
+
+/* TimedOut: amber + slightly elevated opacity so it reads as a warning */
+.activity-card--timed-out {
+    border-left-color: var(--aifam-warning);
+    border-left-width: 3px;
+}

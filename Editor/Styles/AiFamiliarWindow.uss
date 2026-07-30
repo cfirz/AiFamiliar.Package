@@ -1,0 +1,1045 @@
+/* AiFamiliarWindow Styles - Main Window Layout */
+
+/* ===== Global Control Overrides (Dark Blue Palette) ===== */
+
+/* All buttons inside the window */
+.ai-familiar-window Button {
+    background-color: var(--aifam-surface);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    color: var(--aifam-text-secondary);
+    border-radius: 4px;
+}
+
+.ai-familiar-window Button:hover {
+    background-color: var(--aifam-surface-hover);
+}
+
+.ai-familiar-window Button:active {
+    background-color: var(--aifam-surface-active);
+}
+
+/* All text fields / text inputs */
+.ai-familiar-window TextField .unity-base-text-field__input {
+    background-color: var(--aifam-surface-sunken);
+    border-top-color: var(--aifam-border);
+    border-bottom-color: var(--aifam-border);
+    border-left-color: var(--aifam-border);
+    border-right-color: var(--aifam-border);
+    color: var(--aifam-text-primary);
+    border-radius: 4px;
+    --unity-selection-color: var(--aifam-selection);
+    --unity-cursor-color: var(--aifam-text-muted);
+}
+
+/* All labels */
+.ai-familiar-window Label {
+    color: var(--aifam-text-secondary);
+}
+
+/* All dropdowns / enum fields / popup fields */
+.ai-familiar-window EnumField .unity-base-field__input,
+.ai-familiar-window PopupField .unity-base-field__input,
+.ai-familiar-window DropdownField .unity-base-field__input {
+    background-color: var(--aifam-surface);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    color: var(--aifam-text-secondary);
+    border-radius: 4px;
+}
+
+/* All toggles */
+.ai-familiar-window Toggle .unity-toggle__checkmark {
+    background-color: var(--aifam-surface-sunken);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    -unity-background-image-tint-color: var(--aifam-accent-soft);
+}
+
+.ai-familiar-window Toggle Label {
+    color: var(--aifam-text-secondary);
+}
+
+/* Scroll view / scroller styling */
+.ai-familiar-window Scroller .unity-base-slider__tracker {
+    background-color: var(--aifam-bg-root);
+}
+
+.ai-familiar-window Scroller .unity-base-slider__dragger {
+    background-color: var(--aifam-scroller-dragger);
+    border-radius: 3px;
+}
+
+.ai-familiar-window Scroller .unity-base-slider__dragger:hover {
+    background-color: var(--aifam-scroller-dragger-hover);
+}
+
+.ai-familiar-window RepeatButton {
+    background-color: var(--aifam-surface-sunken);
+    border-color: var(--aifam-border);
+}
+
+/* HelpBox — Unity's native info/warning box is not covered by the control overrides
+   above, but the `.ai-familiar-window Label` rule lightens its inner text. Without an
+   explicit dark surface it renders light-text-on-light-background on the Editor's Light
+   theme (illegible). Force a dark surface + light label so it stays readable on both themes. */
+.ai-familiar-window .unity-help-box {
+    background-color: var(--aifam-surface);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    border-radius: 4px;
+}
+
+.ai-familiar-window .unity-help-box__label {
+    color: var(--aifam-text-secondary);
+}
+
+/* ===== End Global Overrides ===== */
+
+/* Root container */
+.ai-familiar-window {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: var(--aifam-bg-root);
+}
+
+/* Header container */
+.header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* New conversation button - width only, styling via .new-conversation-button below */
+.new-conversation-button {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+/* Right buttons container */
+.header-right-buttons {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+/* History button */
+.history-button {
+    width: 100px;
+    margin-right: 10px;
+}
+
+/* Settings button */
+.settings-button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* Output header */
+.output-header {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+/* Output label */
+.output-label {
+    margin-bottom: 0;
+}
+
+/* Apply changes output button */
+.apply-changes-output-button {
+    width: 120px;
+}
+
+/* Output container */
+.output-container {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-height: 0;
+    margin-bottom: 12px;
+}
+
+/* Message scroll view */
+.message-scroll-view {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Settings row - contains Mode, Context Detail, and Model */
+.settings-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+/* Consistent styling for all enum fields in settings row */
+.settings-enum-field {
+    align-self: center;
+}
+
+/* Mode container */
+.mode-container {
+    flex-shrink: 0;
+}
+
+/* Mode label */
+.mode-label {
+    margin-bottom: 0;
+}
+
+/* Context detail container */
+.context-detail-container {
+    flex-shrink: 0;
+}
+
+/* Context container */
+.context-container {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+/* Context row */
+.context-row {
+    flex-direction: row;
+}
+
+/* Context label */
+.context-label {
+    margin-right: 10px;
+}
+
+/* Selection container */
+.selection-container {
+    flex-direction: row;
+    margin-right: 10px;
+}
+
+/* Console container */
+.console-container {
+    flex-direction: row;
+}
+
+/* Model container */
+.model-container {
+    flex-shrink: 0;
+}
+
+/* Model row */
+.model-row {
+    flex-direction: row;
+}
+
+/* Model label field */
+.model-label-field {
+    width: 40px;
+}
+
+/* Model field */
+.model-field {
+    width: 150px;
+}
+
+/* Status container */
+.status-container {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+/* Status label */
+.status-label {
+    margin-bottom: 0;
+}
+
+/* Timer label */
+.timer-label {
+    margin-bottom: 0;
+    margin-left: 10px;
+    -unity-text-align: middle-right;
+}
+
+/* Button container */
+.button-container {
+    flex-direction: row;
+    margin-bottom: 7px;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+/* Suggest button */
+.suggest-button {
+    width: 100px;
+    height: 23px;
+    margin-bottom: 7px;
+    margin-right: 5px;
+}
+
+/* Cancel button */
+.cancel-button {
+    width: 100px;
+}
+
+/* Apply change button */
+.apply-change-button {
+    width: 120px;
+    margin-left: 10px;
+}
+
+/* Single shared attachments row (drag-and-drop referenced files + GameObjects). Stretches to the
+   full window width and wraps to a new line only when the current line is full — so file and
+   GameObject chips flow together instead of living on separate fixed rows. */
+.referenced-attachments-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+}
+
+/* Attachment chip — shared dark/rounded look for file + GameObject tags (matches drop overlay) */
+.file-tag-container,
+.gameobject-tag-container {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--aifam-surface-raised);
+    padding-left: 8px;
+    padding-right: 4px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+/* Chip icon (script glyph for files, cube for GameObjects) */
+.file-tag-icon,
+.gameobject-tag-icon {
+    font-size: 12px;
+    margin-right: 4px;
+    color: var(--aifam-text-muted);
+}
+
+/* Chip name */
+.file-tag-name,
+.gameobject-tag-name {
+    font-size: 11px;
+    color: var(--aifam-text-primary);
+}
+
+/* Chip remove (×) button */
+.file-tag-remove-button,
+.gameobject-tag-remove-button {
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 14px;
+    color: var(--aifam-text-muted);
+    background-color: transparent;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.file-tag-remove-button:hover,
+.gameobject-tag-remove-button:hover {
+    color: var(--aifam-text-primary);
+    background-color: transparent;
+}
+
+/* Shared "Clear all" button — right-aligned at the end of the active attachment row */
+.attachments-clear-all {
+    margin-left: auto;
+    align-self: center;
+    background-color: transparent;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    color: var(--aifam-text-muted);
+    font-size: 11px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.attachments-clear-all:hover {
+    color: var(--aifam-text-primary);
+    background-color: transparent;
+}
+
+/* Prompt container */
+.prompt-container {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Drag-and-drop "attach items" overlay — shown over the prompt box while dragging */
+.prompt-drop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--aifam-overlay-scrim);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.prompt-drop-overlay__card {
+    align-items: center;
+    justify-content: center;
+    padding-left: 28px;
+    padding-right: 28px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background-color: var(--aifam-surface-raised);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: var(--aifam-accent);
+    border-right-color: var(--aifam-accent);
+    border-top-color: var(--aifam-accent);
+    border-bottom-color: var(--aifam-accent);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.prompt-drop-overlay__heading {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: var(--aifam-text-primary);
+    -unity-text-align: middle-center;
+    margin-bottom: 4px;
+}
+
+.prompt-drop-overlay__subtext {
+    font-size: 11px;
+    color: var(--aifam-text-muted);
+    -unity-text-align: middle-center;
+}
+
+/* Prompt label */
+.prompt-label {
+    margin-bottom: 5px;
+}
+
+/* Prompt field */
+.prompt-field {
+    height: 120px;
+    margin-bottom: 5px;
+}
+
+.prompt-field .unity-base-text-field__input {
+    background-color: var(--aifam-surface-sunken);
+    border-top-color: var(--aifam-border);
+    border-bottom-color: var(--aifam-border);
+    border-left-color: var(--aifam-border);
+    border-right-color: var(--aifam-border);
+    color: var(--aifam-text-primary);
+    border-radius: 6px;
+    --unity-selection-color: var(--aifam-selection);
+    --unity-cursor-color: var(--aifam-text-muted);
+}
+
+/* Submit / Suggest button */
+.suggest-button {
+    background-color: var(--aifam-surface);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    color: var(--aifam-text-secondary);
+    border-radius: 4px;
+}
+
+.suggest-button:hover {
+    background-color: var(--aifam-surface-hover);
+}
+
+/* Stop button */
+.stop-button {
+    background-color: var(--aifam-danger-fill);
+    border-top-color: var(--aifam-danger-fill-border);
+    border-bottom-color: var(--aifam-danger-fill-border);
+    border-left-color: var(--aifam-danger-fill-border);
+    border-right-color: var(--aifam-danger-fill-border);
+    color: var(--aifam-danger-fill-text);
+    border-radius: 4px;
+}
+
+/* Header buttons */
+.new-conversation-button {
+    background-color: var(--aifam-surface);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    color: var(--aifam-text-secondary);
+    border-radius: 4px;
+}
+
+.history-button {
+    background-color: var(--aifam-surface);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    color: var(--aifam-text-secondary);
+    border-radius: 4px;
+}
+
+.settings-button {
+    background-color: var(--aifam-surface);
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    color: var(--aifam-text-secondary);
+    border-radius: 4px;
+}
+
+/* Plan step action buttons container */
+.plan-step-action-buttons-container {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.plan-step-action-buttons-container--organize {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* Execution plan (PlanEditorUI) */
+.plan-root {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.plan-header-container {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.plan-status-label {
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--aifam-text-secondary);
+}
+
+.plan-title {
+    font-size: 12px;
+    color: var(--aifam-text-primary);
+}
+
+.plan-steps-container {
+    flex-grow: 1;
+    margin-bottom: 6px;
+}
+
+.plan-button-container {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+.plan-cancel-button {
+    flex-grow: 1;
+    margin-right: 6px;
+}
+
+.plan-button-container--bottom {
+    margin-top: 4px;
+}
+
+.plan-regenerate-button {
+    flex-grow: 1;
+    margin-right: 6px;
+}
+
+.plan-approve-button {
+    flex-grow: 1;
+}
+
+.plan-step-container--row {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    min-width: 0;
+}
+
+.plan-step-status-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    font-size: 14px;
+    color: var(--aifam-text-muted);
+    flex-shrink: 0;
+}
+
+.plan-step-status-icon--completed { color: var(--aifam-success); }
+.plan-step-status-icon--in-progress { color: var(--aifam-warning); }
+.plan-step-status-icon--failed { color: var(--aifam-error); }
+.plan-step-status-icon--skipped { color: var(--aifam-text-faint); }
+.plan-step-status-icon--pending { color: var(--aifam-text-faint); }
+.plan-step-status-icon--pending-changes { color: var(--aifam-warning); }
+.plan-step-status-icon--waiting { color: var(--aifam-warning); font-weight: 700; }
+
+.plan-step-spinner {
+    width: 14px;
+    height: 14px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-radius: 50%;
+    border-color: var(--aifam-spinner-track);
+    border-top-color: var(--aifam-accent-soft);
+    flex-shrink: 0;
+}
+
+.plan-step-number {
+    margin-right: 8px;
+    font-size: 12px;
+    color: var(--aifam-text-primary);
+    flex-shrink: 0;
+}
+
+.plan-step-description-label {
+    flex-grow: 1;
+    min-width: 0;
+    font-size: 12px;
+    color: var(--aifam-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.plan-step-description-field {
+    flex-grow: 1;
+    min-width: 0;
+    font-size: 12px;
+    margin-right: 8px;
+}
+
+.plan-step-description-field .unity-base-text-field__input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Plan step action button (up arrow, down arrow, delete) */
+.plan-step-action-button {
+    width: 36px;
+    height: 18px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-right: 2px;
+    font-size: 12px;
+    min-width: 36px;
+    min-height: 18px;
+}
+
+/* ===== UX Phase 1-3 Styles ===== */
+
+/* Mode Segmented Control */
+.mode-segment-container {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.mode-segment-button {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 11px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-color: var(--aifam-border-strong);
+    margin-right: 2px;
+}
+
+/* Conversation Tabs Bar (above the message scroll view) */
+.conversation-tabs-bar {
+    flex-direction: row;
+    align-items: center;
+    height: 28px;
+    flex-shrink: 0;
+    background-color: var(--aifam-bg-bar);
+    border-bottom-width: 1px;
+    border-bottom-color: var(--aifam-border);
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.conversation-tab {
+    flex-direction: row;
+    align-items: center;
+    height: 22px;
+    margin-right: 2px;
+    padding-left: 10px;
+    padding-right: 6px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: var(--aifam-surface);
+    flex-shrink: 0;
+}
+
+.conversation-tab--active {
+    background-color: var(--aifam-accent);
+}
+
+.conversation-tab__title {
+    font-size: 11px;
+    color: var(--aifam-text-muted);
+    margin-right: 6px;
+    -unity-text-align: middle-left;
+}
+
+.conversation-tab__close {
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    color: var(--aifam-text-muted);
+}
+
+.conversation-tab__busy {
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: var(--aifam-warning);
+}
+
+.conversation-tab__new {
+    width: 24px;
+    height: 22px;
+    font-size: 14px;
+    margin-left: 4px;
+    margin-right: 2px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    background-color: var(--aifam-surface);
+    color: var(--aifam-text-muted);
+}
+
+/* Status Footer Bar */
+.status-footer-bar {
+    flex-direction: row;
+    align-items: center;
+    height: 20px;
+    background-color: var(--aifam-bg-bar);
+    padding-left: 8px;
+    padding-right: 8px;
+    flex-shrink: 0;
+}
+
+/* Action Bar */
+.action-bar-button {
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 11px;
+    background-color: var(--aifam-surface);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-color: var(--aifam-border-strong);
+    color: var(--aifam-text-secondary);
+}
+
+/* Slash/Context Picker Overlays */
+.slash-picker-overlay,
+.context-picker-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    background-color: var(--aifam-surface-raised);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-color: var(--aifam-border-strong);
+}
+
+/* Context Pills */
+.context-pills-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 2px;
+}
+
+.context-pill {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--aifam-surface-selected);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding-left: 8px;
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+}
+
+/* History Sidebar */
+.history-sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 260px;
+    background-color: var(--aifam-surface-raised);
+    border-right-width: 1px;
+    border-right-color: var(--aifam-border-strong);
+}
+
+/* Model Selector Popover */
+.model-selector-popover {
+    position: absolute;
+    bottom: 28px;
+    right: 0;
+    min-width: 180px;
+    background-color: var(--aifam-surface-raised);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-color: var(--aifam-border-strong);
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* Shortcut Modal */
+.shortcut-modal {
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 20%;
+    background-color: var(--aifam-surface-raised);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-color: var(--aifam-border-strong);
+    padding: 16px 20px;
+}
+
+/* Execution Rail */
+.execution-rail {
+    background-color: var(--aifam-surface-raised);
+    border-bottom-width: 1px;
+    border-bottom-color: var(--aifam-border);
+}
+
+/* Plan Review Panel */
+.plan-review-panel {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 10%;
+    bottom: 10%;
+    background-color: var(--aifam-surface-raised);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-color: var(--aifam-border-strong);
+    padding: 16px 20px;
+}
+
+
+/* Todo checklist pane (todo_write tool) — BEM: block .aifam-todo-pane, items .aifam-todo-item */
+.aifam-todo-pane {
+    background-color: var(--aifam-surface-sunken);
+    border-bottom-width: 1px;
+    border-bottom-color: var(--aifam-border);
+    flex-shrink: 0;
+}
+
+.aifam-todo-pane__header {
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 10px;
+}
+
+.aifam-todo-pane__toggle {
+    width: 16px;
+    font-size: 9px;
+    color: var(--aifam-text-muted);
+    -unity-text-align: middle-center;
+}
+
+.aifam-todo-pane__title {
+    font-size: 11px;
+    color: var(--aifam-text-secondary);
+    -unity-font-style: bold;
+    margin-left: 2px;
+}
+
+.aifam-todo-pane__list {
+    max-height: 140px;
+    padding: 0 10px 6px 12px;
+}
+
+.aifam-todo-item {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1px 0;
+}
+
+.aifam-todo-item__glyph {
+    width: 16px;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--aifam-text-muted);
+}
+
+.aifam-todo-item__text {
+    flex-shrink: 1;
+    min-width: 0;
+    white-space: normal;
+    font-size: 11px;
+    color: var(--aifam-text-secondary);
+}
+
+.aifam-todo-item__priority {
+    flex-shrink: 0;
+    margin-left: 4px;
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: var(--aifam-warning);
+}
+
+.aifam-todo-item--in-progress .aifam-todo-item__glyph {
+    color: var(--aifam-accent);
+}
+
+.aifam-todo-item--in-progress .aifam-todo-item__text {
+    color: var(--aifam-text-primary);
+}
+
+.aifam-todo-item--completed {
+    opacity: 0.75;
+}
+
+.aifam-todo-item--completed .aifam-todo-item__glyph {
+    color: var(--aifam-success);
+}
+
+.aifam-todo-item--cancelled {
+    opacity: 0.55;
+}
+
+.aifam-todo-item--cancelled .aifam-todo-item__glyph {
+    color: var(--aifam-text-faint);
+}

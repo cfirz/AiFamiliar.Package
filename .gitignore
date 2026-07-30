@@ -1,0 +1,7 @@
+# NOTE: there is deliberately NO *.unitypackage rule here.
+# The built .unitypackage is committed to this repo on purpose, so users who don't want to
+# install via UPM can download and import it manually.
+
+# Build artifacts
+*.dll.mdb
+*.pdb

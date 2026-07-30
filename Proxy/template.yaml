@@ -1,0 +1,157 @@
+# AWS SAM template for the AI Familiar Lambda streaming proxy.
+#
+# Provisions two endpoints from the same Node.js streaming Lambda:
+#   1. Lambda Function URL with InvokeMode=RESPONSE_STREAM (15min timeout, simplest path)
+#   2. API Gateway REST API with ResponseTransferMode=STREAM (15min timeout,
+#      adds throttling / WAF / custom-domain options on top)
+#
+# Both endpoints stream upstream LLM tokens to the client without buffering. Pick
+# whichever endpoint fits your needs and configure its URL in Unity Editor settings.
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AI Familiar Lambda streaming proxy (OpenAI / Anthropic)
+
+Globals:
+  Function:
+    Runtime: nodejs24.x
+    Architectures:
+      - x86_64
+    Timeout: 900   # 15 min — matches the API Gateway Response Streaming ceiling
+    MemorySize: 256
+    Environment:
+      Variables:
+        NODE_OPTIONS: --enable-source-maps
+
+Resources:
+
+  # ---------------------------------------------------------------
+  # Lambda function (Node.js 20 streaming handler)
+  # ---------------------------------------------------------------
+  AISuggestionsProxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: UnityAISuggestionsProxy
+      Handler: index.handler
+      CodeUri: .
+      Description: Streaming proxy for the AI Familiar Unity Editor plugin
+      FunctionUrlConfig:
+        AuthType: NONE
+        InvokeMode: RESPONSE_STREAM   # End-to-end streaming via Function URL
+        Cors:
+          AllowMethods:
+            - POST
+            - OPTIONS
+          AllowHeaders:
+            - Content-Type
+            - Authorization
+            - X-API-Key
+            - X-Provider
+          AllowOrigins:
+            - '*'
+          MaxAge: 600
+
+  # ---------------------------------------------------------------
+  # API Gateway REST API with Response Streaming (launched 2025-11-19)
+  # ---------------------------------------------------------------
+  # Documented at:
+  #   https://aws.amazon.com/blogs/compute/building-responsive-apis-with-amazon-api-gateway-response-streaming/
+  AISuggestionsRestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: UnityAISuggestionsApi
+      Description: Streaming REST API for the AI Familiar Unity Editor plugin
+      EndpointConfiguration:
+        # IMPORTANT: must be REGIONAL — Edge-optimized has a 30s idle timeout that
+        # can cut off slow reasoning models mid-stream. Regional has 5min idle.
+        Types:
+          - REGIONAL
+
+  AISuggestionsResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref AISuggestionsRestApi
+      ParentId: !GetAtt AISuggestionsRestApi.RootResourceId
+      PathPart: suggest
+
+  AISuggestionsPostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AISuggestionsRestApi
+      ResourceId: !Ref AISuggestionsResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        # Response Streaming: the URI must end in /response-streaming-invocations
+        # (instead of the usual /invocations) and ResponseTransferMode must be STREAM.
+        Uri: !Sub
+          - arn:aws:apigateway:${AWS::Region}:lambda:path/2021-11-15/functions/${FnArn}/response-streaming-invocations
+          - FnArn: !GetAtt AISuggestionsProxyFunction.Arn
+        ResponseTransferMode: STREAM
+
+  # CORS preflight — Response Streaming doesn't transform OPTIONS, so we handle it
+  # at the method-mock level.
+  AISuggestionsOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AISuggestionsRestApi
+      ResourceId: !Ref AISuggestionsResource
+      HttpMethod: OPTIONS
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        IntegrationResponses:
+          - StatusCode: '200'
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-API-Key,X-Provider'"
+            ResponseTemplates:
+              application/json: ''
+      MethodResponses:
+        - StatusCode: '200'
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Headers: true
+
+  AISuggestionsApiInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt AISuggestionsProxyFunction.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AISuggestionsRestApi}/*/POST/suggest
+
+  AISuggestionsDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - AISuggestionsPostMethod
+      - AISuggestionsOptionsMethod
+    Properties:
+      RestApiId: !Ref AISuggestionsRestApi
+      Description: Streaming deployment
+
+  AISuggestionsStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId: !Ref AISuggestionsRestApi
+      DeploymentId: !Ref AISuggestionsDeployment
+      StageName: prod
+
+Outputs:
+  ProxyFunctionUrl:
+    Description: Lambda Function URL endpoint (RESPONSE_STREAM mode). Append nothing — use as-is in Unity settings.
+    Value: !GetAtt AISuggestionsProxyFunction.FunctionUrl
+
+  ApiGatewayInvokeUrl:
+    Description: API Gateway REST endpoint with Response Streaming enabled. Use this in Unity settings.
+    Value: !Sub https://${AISuggestionsRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/suggest
+
+  ProxyFunctionArn:
+    Description: Lambda function ARN
+    Value: !GetAtt AISuggestionsProxyFunction.Arn

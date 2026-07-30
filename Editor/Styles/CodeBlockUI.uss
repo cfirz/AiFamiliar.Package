@@ -1,0 +1,137 @@
+/* CodeBlockUI Styles - Code Block Component */
+
+/* Code block container */
+.code-block-container {
+    background-color: var(--aifam-surface-sunken);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--aifam-border);
+    border-bottom-color: var(--aifam-border);
+    border-left-color: var(--aifam-border);
+    border-right-color: var(--aifam-border);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    flex-direction: column;
+}
+
+/* Header bar */
+.code-block-header-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--aifam-border);
+    background-color: var(--aifam-bg-root);
+}
+
+/* Language container */
+.language-container {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Language label */
+.language-label {
+    font-size: 11px;
+    color: var(--aifam-text-muted);
+    margin-right: 4px;
+}
+
+/* Dropdown arrow */
+.dropdown-arrow {
+    font-size: 8px;
+    color: var(--aifam-text-faint);
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+/* Button container */
+.code-block-button-container {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Save button */
+.code-block-save-button {
+    font-size: 11px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-right: 4px;
+    background-color: var(--aifam-surface);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+}
+
+/* Copy button */
+.code-block-copy-button {
+    font-size: 11px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: var(--aifam-surface);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+}
+
+/* Code scroll view */
+.code-scroll-view {
+    flex-grow: 1;
+    min-height: 100px;
+    max-height: 500px;
+    background-color: var(--aifam-surface-sunken);
+}
+
+/* Code content container */
+.code-content-container {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+/* Line numbers container */
+.line-numbers-container {
+    width: 50px;
+    background-color: var(--aifam-bg-root);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-right-width: 1px;
+    border-right-color: var(--aifam-border);
+    flex-shrink: 0;
+}
+
+/* Line number */
+.line-number {
+    font-size: 11px;
+    color: var(--aifam-text-faint);
+    -unity-text-align: middle-right;
+    margin-bottom: 2px;
+}
+

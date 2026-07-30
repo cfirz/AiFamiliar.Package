@@ -1,0 +1,110 @@
+/* AiFamiliarTheme.uss — semantic color tokens for the AI Familiar UI.
+
+   The window root carries `.ai-familiar-window` plus exactly one of `.aifam-theme-dark` /
+   `.aifam-theme-light`, chosen from `EditorGUIUtility.isProSkin` at window setup. Every other
+   stylesheet references these tokens via `var(--aifam-...)` so a single palette drives the whole
+   UI and adapts to the editor's Dark/Light theme.
+
+   This is the USS mirror of the C# palette in UI/AiFamiliarColors.cs — the same token has the
+   same value in both files. Keep them in sync when tuning.
+
+   Load order matters: this sheet is loaded FIRST (before AiFamiliarWindow.uss et al.) so the
+   variables are defined before they are referenced. */
+
+/* ── Dark theme (Unity Pro skin) ─────────────────────────────────────────────── */
+.ai-familiar-window.aifam-theme-dark {
+    --aifam-bg-root: rgb(24, 24, 31);
+    --aifam-surface: rgb(35, 35, 46);
+    --aifam-surface-raised: rgba(38, 38, 51, 0.98);
+    --aifam-surface-sunken: rgb(28, 28, 36);
+    --aifam-surface-hover: rgb(45, 45, 60);
+    --aifam-bg-bar: rgb(22, 22, 28);
+
+    --aifam-border: rgb(51, 51, 64);
+    --aifam-border-strong: rgb(64, 64, 89);
+
+    --aifam-text-primary: rgb(220, 222, 230);
+    --aifam-text-secondary: rgb(200, 205, 220);
+    --aifam-text-muted: rgb(160, 165, 185);
+    --aifam-text-faint: rgb(120, 125, 150);
+
+    --aifam-accent: rgb(74, 158, 255);
+    --aifam-accent-soft: rgb(120, 200, 255);
+    --aifam-on-accent: rgb(245, 248, 255);
+
+    --aifam-success: rgb(120, 220, 120);
+    --aifam-warning: rgb(240, 210, 120);
+    --aifam-error: rgb(240, 120, 120);
+
+    --aifam-surface-active: rgb(55, 55, 72);
+    --aifam-surface-selected: rgb(51, 64, 89);
+    --aifam-accent-subtle: rgba(74, 158, 255, 0.25);
+
+    --aifam-danger-fill: rgba(140, 50, 50, 0.8);
+    --aifam-danger-fill-border: rgb(180, 60, 60);
+    --aifam-danger-fill-text: rgb(255, 220, 220);
+    --aifam-success-fill: rgb(46, 150, 72);
+    --aifam-success-fill-border: rgb(64, 175, 96);
+    --aifam-warning-fill: rgb(155, 120, 35);
+    --aifam-warning-fill-border: rgb(190, 150, 60);
+
+    --aifam-overlay-scrim: rgba(20, 22, 30, 0.55);
+    --aifam-scroller-dragger: rgba(60, 60, 80, 0.6);
+    --aifam-scroller-dragger-hover: rgba(76, 76, 102, 0.8);
+    --aifam-spinner-track: rgba(160, 165, 185, 0.25);
+
+    --aifam-user-bubble-bg: rgb(40, 44, 58);
+    --aifam-selection: rgba(74, 158, 255, 0.35);
+    --aifam-row-alt: rgba(255, 255, 255, 0.04);
+    --aifam-success-surface: rgb(41, 49, 41);
+    --aifam-success-surface-subtle: rgba(31, 71, 36, 0.55);
+}
+
+/* ── Light theme (Unity Personal / Light skin) ───────────────────────────────── */
+.ai-familiar-window.aifam-theme-light {
+    --aifam-bg-root: rgb(230, 231, 235);
+    --aifam-surface: rgb(246, 247, 249);
+    --aifam-surface-raised: rgba(252, 252, 253, 0.98);
+    --aifam-surface-sunken: rgb(250, 250, 252);
+    --aifam-surface-hover: rgb(236, 238, 242);
+    --aifam-bg-bar: rgb(222, 223, 228);
+
+    --aifam-border: rgb(206, 208, 214);
+    --aifam-border-strong: rgb(188, 190, 198);
+
+    --aifam-text-primary: rgb(28, 30, 36);
+    --aifam-text-secondary: rgb(55, 58, 66);
+    --aifam-text-muted: rgb(110, 114, 124);
+    --aifam-text-faint: rgb(140, 144, 154);
+
+    --aifam-accent: rgb(38, 120, 235);
+    --aifam-accent-soft: rgb(60, 140, 225);
+    --aifam-on-accent: rgb(245, 248, 255);
+
+    --aifam-success: rgb(30, 140, 60);
+    --aifam-warning: rgb(176, 120, 20);
+    --aifam-error: rgb(200, 54, 54);
+
+    --aifam-surface-active: rgb(224, 226, 232);
+    --aifam-surface-selected: rgb(214, 226, 246);
+    --aifam-accent-subtle: rgba(38, 120, 235, 0.14);
+
+    --aifam-danger-fill: rgba(200, 64, 64, 1);
+    --aifam-danger-fill-border: rgb(176, 48, 48);
+    --aifam-danger-fill-text: rgb(255, 244, 244);
+    --aifam-success-fill: rgb(42, 150, 70);
+    --aifam-success-fill-border: rgb(56, 168, 88);
+    --aifam-warning-fill: rgb(175, 125, 25);
+    --aifam-warning-fill-border: rgb(195, 145, 45);
+
+    --aifam-overlay-scrim: rgba(120, 124, 135, 0.35);
+    --aifam-scroller-dragger: rgba(150, 152, 162, 0.7);
+    --aifam-scroller-dragger-hover: rgba(130, 132, 144, 0.85);
+    --aifam-spinner-track: rgba(110, 114, 124, 0.3);
+
+    --aifam-user-bubble-bg: rgb(223, 231, 247);
+    --aifam-selection: rgba(74, 158, 255, 0.28);
+    --aifam-row-alt: rgba(0, 0, 0, 0.035);
+    --aifam-success-surface: rgb(225, 240, 227);
+    --aifam-success-surface-subtle: rgba(205, 236, 210, 0.65);
+}

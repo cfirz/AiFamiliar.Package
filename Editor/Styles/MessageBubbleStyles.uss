@@ -1,0 +1,65 @@
+/* Custom styles for message bubble text fields - BEM naming convention */
+.message-bubble__text-field .unity-base-text-field__input {
+    --unity-selection-color: var(--aifam-selection);
+    background-color: transparent;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+/* Code block text field styles - BEM naming convention */
+.code-block__text .unity-base-text-field__input {
+    --unity-selection-color: var(--aifam-selection);
+    background-color: var(--aifam-bg-bar);
+    color: var(--aifam-text-primary);
+    /* font-family not supported in Unity UI Toolkit - removed */
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+/* Streaming box styles (Plan 0014) */
+.streaming-box {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: var(--aifam-surface-raised);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--aifam-border);
+    border-bottom-color: var(--aifam-border);
+    border-left-color: var(--aifam-border);
+    border-right-color: var(--aifam-border);
+    border-radius: 4px;
+    padding: 8px 12px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.streaming-box .message-bubble__text-field .unity-base-text-field__input {
+    background-color: transparent;
+    color: var(--aifam-text-primary);
+}
+
+.loading-spinner {
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+    border-radius: 50%;
+    border-color: var(--aifam-border);
+    border-top-color: var(--aifam-accent-soft);
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+/* Thinking step messages (Plan 0014) */
+.message-bubble--thinking {
+    opacity: 0.8;
+}
+
+.message-bubble--thinking .message-bubble__text-field {
+    -unity-font-style: italic;
+}

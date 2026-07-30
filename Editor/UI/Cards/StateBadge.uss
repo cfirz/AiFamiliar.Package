@@ -1,0 +1,58 @@
+/* ============================================================
+   StateBadge.uss — Icon + color for each ActivityState.
+   The spinner rotation is driven by C# schedule ticks because
+   Unity UI Toolkit 6000.x does not support @keyframes.
+   ============================================================ */
+
+.state-badge {
+    width: 16px;
+    height: 16px;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+}
+
+/* Per-state colors */
+.state-badge--pending {
+    color: var(--aifam-text-faint);
+}
+
+.state-badge--running {
+    color: var(--aifam-accent);
+}
+
+.state-badge--blocked {
+    color: var(--aifam-warning);
+}
+
+.state-badge--succeeded {
+    color: var(--aifam-success);
+}
+
+.state-badge--failed {
+    color: var(--aifam-error);
+}
+
+.state-badge--skipped {
+    color: var(--aifam-text-faint);
+}
+
+.state-badge--timed-out {
+    color: var(--aifam-warning);
+}
+
+/* Running spinner uses a circular border — rotated by C# tick */
+.state-badge--running-spinner {
+    width: 12px;
+    height: 12px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-radius: 50%;
+    border-color: var(--aifam-accent-subtle);
+    border-top-color: var(--aifam-accent);
+    flex-shrink: 0;
+}

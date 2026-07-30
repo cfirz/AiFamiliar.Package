@@ -1,0 +1,12 @@
+{
+  "name": "com.cfirz.aifamiliar",
+  "version": "1.48.0",
+  "displayName": "AI Familiar",
+  "unity": "6000.0",
+  "description": "AI agent integration (BYOK) for Unity editor.",
+  "author": { "name": "Cfir.z" },
+  "keywords": ["ai", "agent", "editor", "familiar"],
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  }
+}

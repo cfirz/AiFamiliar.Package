@@ -1,0 +1,140 @@
+/* ConversationUI Styles - History Dropdown */
+
+/* Dropdown panel */
+.conversation-dropdown {
+    position: absolute;
+    width: 350px;
+    background-color: var(--aifam-surface-raised);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+}
+
+/* Search container */
+.search-container {
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--aifam-border-strong);
+    position: relative;
+}
+
+/* Search icon */
+.search-icon {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+/* Text field container */
+.text-field-container {
+    flex-grow: 1;
+    position: relative;
+}
+
+/* Search field */
+.search-field {
+    width: 100%;
+    padding-right: 24px;
+}
+
+/* Clear button */
+.clear-button {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    bottom: 0;
+    font-size: 14px;
+    color: var(--aifam-text-muted);
+    align-self: center;
+}
+
+/* Conversation list */
+.conversation-list {
+    flex-grow: 1;
+    min-height: 300px;
+}
+
+/* Date group container */
+.date-group-container {
+    margin-bottom: 10px;
+}
+
+/* Date header */
+.date-header {
+    font-size: 11px;
+    color: var(--aifam-text-faint);
+    padding-top: 8px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    -unity-text-align: middle-left;
+}
+
+/* New conversation item */
+.new-conversation-item {
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: var(--aifam-surface-selected);
+    margin-bottom: 2px;
+}
+
+.new-conversation-item:hover {
+    background-color: var(--aifam-surface-selected);
+}
+
+/* New conversation title */
+.new-conversation-title {
+    font-size: 13px;
+    color: var(--aifam-accent-soft);
+    flex-grow: 1;
+    -unity-text-align: middle-left;
+}
+
+/* Conversation item */
+.conversation-item {
+    flex-direction: row;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-bottom: 2px;
+}
+
+.conversation-item:hover {
+    background-color: var(--aifam-border);
+}
+
+/* Conversation title */
+.conversation-title {
+    font-size: 13px;
+    color: var(--aifam-text-primary);
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
+    width: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -unity-text-align: middle-left;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+/* Delete button */
+.delete-button {
+    font-size: 14px;
+    color: var(--aifam-error);
+    margin-left: 8px;
+}
+
