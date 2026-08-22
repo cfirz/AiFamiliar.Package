@@ -2,16 +2,13 @@
 
 A powerful AI development assistant integrated directly into the Unity Editor — it reads your code, edits your scenes, and imports assets without leaving Unity.
 
-**No subscription. No credits. No markup.** Bring your own API key (Claude, GPT, or Gemini) or run a free local model — you pay your provider directly and see real per-message costs in-editor. It's a development assistant for your Editor workflow, **not** a runtime SDK for adding AI to your shipped game.
-
-<img width="1264" height="848" alt="Card" src="https://github.com/user-attachments/assets/6809c412-aa43-4ff3-a3df-f30e015b88cf" />
+**No subscription. No credits. No markup.** Bring your own API key for the major cloud AI providers or run a free local model — you pay your provider directly and see real per-message costs in-editor. It's a development assistant for your Editor workflow, **not** a runtime SDK for adding AI to your shipped game.
 
 ## Why AI Familiar?
 
-Why not just use Cursor or Claude Code with a free Unity MCP bridge?
+Why not just use a desktop AI coding tool with a free Unity MCP bridge?
 
-- **No external tooling** — no Node install, no separate MCP server process, no second IDE to alt-tab to. It runs i![Uploading Card.png…]()
-n the same window as your scene.
+- **No external tooling** — no Node install, no separate MCP server process, no second IDE to alt-tab to. It runs in the same window as your scene.
 - **Read-only investigation by design** — every request starts by inspecting your project with read-only tools before anything is proposed.
 - **Every mutation is diff-reviewed** with one-click revert (Unity Undo-tracked).
 - **Editor-native** — it understands scenes, GameObjects, components, materials, and prefabs, not just text files.
@@ -40,8 +37,8 @@ n the same window as your scene.
       - Materials can be resolved by `material_path`, `material_name`, or derived names from the GameObject (e.g., `NameMaterial`, `Name_Material`, `Name`).
   - **Prefab Editing**: Open a prefab asset, modify it (components, transforms, child structure), and save it back — changes apply to the prefab itself, so every instance updates
 - **Plans for Complex Tasks**: Plan and execute complex tasks with multiple steps
-  - **Manual confirmation**: Review plan + approve generated changes before applying them
-  - **Auto confirmation**: Auto-approve and execute plans for faster iteration
+  - **Step-by-step approval** (default): Approve the plan, then review each generated file change before it is applied
+  - **Auto-approve**: Apply file changes without pausing at each step — the plan itself still needs your approval, and changes stay revertable
   - **Optimized planning**: Large tasks are bundled into fewer external steps (up to 10), and each step can include multiple internal actions
   - **Internal progress**: When a step contains multiple actions, the output shows per-action progress (e.g., `Internal step i/N: ...`)
   - **Domain reload resilience**: Execution can resume after Unity recompiles scripts / reloads the domain
@@ -60,9 +57,9 @@ n the same window as your scene.
   - **Retrieval**: relevant snippets are pulled into every conversation's prompt automatically, and the assistant can search for more via the `memory_search` and `memory_get` tools.
   - **On by default** — manage everything from Settings ▸ Memory: a master toggle, capture/injection knobs, a file browser (Preview / Open / Delete), and a manual Rebuild Index button.
 - **Multi-Provider Support**:
-  - **OpenAI**: GPT-5.5 family (`gpt-5.5`, `gpt-5.5-pro` — flagship and pro only at launch), GPT-5.4 family (`gpt-5.4`, `-mini`, `-nano`, `-pro`), GPT-5 family, and o-series reasoning models (o3, o3-mini)
-  - **Anthropic**: Claude Opus 4.8 (default), Opus 4.7, Sonnet 4.6, Haiku 4.5, Opus 4.5, Opus 4.1 — with extended and adaptive thinking
-  - **Google Gemini**: Gemini 3.5 Flash, Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 3.1 Flash-Lite — connects directly to Google's OpenAI-compatible endpoint (no proxy needed); supports native tool-calling
+  - **OpenAI**: GPT-5.6 family (`gpt-5.6-sol` (default), `-terra`, `-luna`, plus a Pro row for Sol), GPT-5.5 family (`gpt-5.5`, `gpt-5.5-pro`), GPT-5.4 family (`gpt-5.4`, `-mini`, `-nano`, `-pro`)
+  - **Anthropic**: Claude Opus 5 (default), Sonnet 5, Opus 4.8, Opus 4.7, Sonnet 4.6, Haiku 4.5, Opus 4.5, Fable 5 — with extended and adaptive thinking
+  - **Google Gemini**: Gemini 3.6 Flash (default), Gemini 3.5 Flash, Gemini 3.5 Flash-Lite, Gemini 3.1 Pro (Preview), Gemini 3.1 Flash-Lite — connects directly to Google's OpenAI-compatible endpoint (no proxy needed); supports native tool-calling
   - **Local LLMs**: Connect to OpenAI-compatible local servers via LM Studio
   - **Provider-First Picker**: The model selector groups models by provider — pick Anthropic, OpenAI, Google, or Local first, then choose from that provider's models.
 - **Cost & Token Transparency**: The status footer shows live `$x · Nk tok` actuals for every chat/agent turn. Hover for a per-turn breakdown (input, output, cache read, cache write). Totals persist across sessions and tab switches. Cache-aware pricing — Anthropic cache-read tokens are billed at ~0.10× the input rate; cache-write at ~1.25×. Each completed reply also shows a small per-turn cost chip (e.g. `$0.014 · 12.3k in / 800 out`), and the footer total merges chat and plan-execution spend (hover for the breakdown).
@@ -104,7 +101,7 @@ No proxy or AWS account is required for Claude, OpenAI, or Gemini cloud models. 
 
 Your keys are saved to `Library/AiFamiliarCache/api_keys.json` — outside the `Assets/` folder, so they are never committed to source control and never included in a build. They are sent only directly to the provider you select, never to us.
 
-> **Distribution note**: The Asset Store package ships as a compiled, obfuscated editor-only assembly (`AiFamiliar.Editor.dll`) — a finished, supported tool rather than a source-code framework. Newtonsoft.Json is the only bundled dependency.
+> **Distribution note**: The Asset Store package ships as a compiled, obfuscated editor-only assembly (`AiFamiliar.Editor.dll`) — a finished, supported tool rather than a source-code framework. It bundles the following MIT-licensed third-party components: Newtonsoft.Json (Json.NET), Microsoft.CodeAnalysis / Microsoft.CodeAnalysis.CSharp (Roslyn), System.Collections.Immutable, System.Reflection.Metadata, and System.Runtime.CompilerServices.Unsafe — full license texts in `Third-Party Notices.txt` at the package root.
 
 The Settings window shows **Keys**, **Models**, and **About** by default. Toggle **Show advanced settings** at the top of the Settings window to reveal the **Context**, **Conversations**, **Execution**, and **Memory** tabs. This keeps the initial setup simple without hiding any options.
 
@@ -123,12 +120,12 @@ Going direct removes the Lambda's 15-minute execution ceiling. Long-running requ
 ### Proxy (Optional - AWS Lambda)
 A proxy is no longer required. If you prefer server-side key custody or already have a Lambda deployed, it continues to work with no client-side changes.
 
-If you use the included AWS Lambda proxy (`Assets/Proxy/`):
+If you use the included AWS Lambda proxy, its files ship inside the package's own `Proxy/` folder (`Packages/com.cfirz.aifamiliar/Proxy/` for UPM installs, `Assets/AiFamiliar/Proxy/` for `.unitypackage` installs):
 
-- **Important**: When updating the plugin, redeploy your Lambda using the latest `Assets/Proxy/index.mjs` (Node.js 20, streaming via `awslambda.streamifyResponse` — OpenAI requests are routed via the **OpenAI Responses API**, and the request/response shaping lives in the Lambda). Run `sam build && sam deploy` from `Assets/Proxy/`.
-- **Setup / testing guides**:
-  - `Assets/Proxy/PROXY_SETUP_GUIDE.md`
-  - `Assets/Proxy/LAMBDA_TESTING_GUIDE.md`
+- **Important**: When updating the plugin, redeploy your Lambda using the latest `index.mjs` from that folder (Node.js 20, streaming via `awslambda.streamifyResponse` — OpenAI requests are routed via the **OpenAI Responses API**, and the request/response shaping lives in the Lambda). Run `sam build && sam deploy` from the Proxy folder.
+- **Setup / testing guides** (in the same folder):
+  - `PROXY_SETUP_GUIDE.md`
+  - `LAMBDA_TESTING_GUIDE.md`
 
 ### Reasoning Controls (Optional)
 - **OpenAI o-series**: Set **Reasoning Effort** (low/medium/high) to control reasoning depth.
@@ -152,18 +149,14 @@ If you have a higher Anthropic tier, you can raise `rateLimitBudgetTpm` to match
 There is no mode to choose. Just type what you want — the assistant investigates your project with read-only tools first, then responds one of three ways, and **nothing is changed until you click a button**:
 - **Answer** — for questions and explanations: a normal reply, nothing to approve.
 - **Direct action** — for a small, single change: a lightweight card with **Take action** (applies the change, then you accept or reject the diff) and **Make a plan instead**.
-- **Plan** — for multi-step work: a plan card with **Approve / Revise / Reject**. Use the **Auto Confirmation** toggle to switch between **Manual** (review each generated change) and **Auto** (apply automatically) execution.
+- **Plan** — for multi-step work: a plan card with **Approve / Revise / Reject**. By default, execution pauses at every file-change step for your approval; turn on the **Auto-approve** toggle to apply file changes without pausing (you can still review or revert individual files afterwards).
 - **Tool access**: With a tool-capable model selected and Settings ▸ Native Tool Use enabled (default), the assistant reads project files, inspects/modifies the scene, runs tests, and manages packages. Local (LM Studio) models can join in too — enable **Use Native Tools for Local** in Settings ▸ Execution (requires a function-calling-capable model).
 
 ### Session Management
 - **Conversation History**: All conversations are automatically saved and persisted across Unity sessions.
 - **Execution Plan Tracking**: Each conversation stores its execution plan history with timestamps, completion status, and results.
 - **Resume Execution**: Switch between conversations without losing progress. Active plans are automatically restored with full state.
-- **Context Usage Display**: Monitor token usage in real-time based on your selected model's context window (e.g., Claude Opus 4.7: 200k; Claude Sonnet 4.6 / GPT-5.5: 1M; GPT-5.4 / GPT-5: 400k tokens).
-
-## Testing (Contributors)
-- **Run StepExecutor tests**: `.\run_tests.ps1 -TestFilter "StepExecutorTests"`
-- **Note**: Step execution tests use `IProxyClient` + `MockProxyClient` to avoid real network calls / API keys.
+- **Context Usage Display**: Monitor token usage in real-time based on your selected model's context window (e.g., Claude Haiku 4.5: 200k; Claude Opus 5 / Opus 4.8 / Sonnet 4.6: 1M; Gemini 3.x: 1,048,576; GPT-5.6: 1.05M; GPT-5.4: 400k tokens).
 
 ## What the Assistant Can Do
 
@@ -189,4 +182,4 @@ When you approve a direct action or a plan, the AI can perform the following act
 
 ## License
 
-MIT License
+Distributed under the Unity Asset Store End User License Agreement. Bundled third-party components (Newtonsoft.Json and the Microsoft Roslyn/.NET libraries) are used under the MIT License — see `Third-Party Notices.txt` at the package root for the full license texts.
