@@ -1,4 +1,6 @@
-# AI Familiar
+<img width="1920" height="560" alt="Banner_2" src="https://github.com/user-attachments/assets/262732f0-587e-4c41-b2fe-f5420df736ca" />
+
+# AI Familiar - Unity Editor Plugin
 
 A powerful AI development assistant integrated directly into the Unity Editor — it reads your code, edits your scenes, and imports assets without leaving Unity.
 
