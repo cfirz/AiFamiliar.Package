@@ -193,4 +193,4 @@ Found a bug, hit a rough edge, or missing a feature? Report it on the public iss
 
 ## License
 
-Distributed under the Unity Asset Store End User License Agreement. Bundled third-party components (Newtonsoft.Json and the Microsoft Roslyn/.NET libraries) are used under the MIT License — see `Third-Party Notices.txt` at the package root for the full license texts.
+AI Familiar is free to use. Copyright © 2026 Cfir.z. It is licensed under the AI Familiar License (see `LICENSE.md` at the package root): you may use it in any of your own Unity projects, personal or commercial; redistributing it, reselling it, or reverse-engineering the compiled assembly is not permitted. Copies installed from the Unity Asset Store are additionally governed by the Asset Store End User License Agreement. Bundled third-party components (Newtonsoft.Json and the Microsoft Roslyn/.NET libraries) are used under the MIT License — see `Third-Party Notices.txt` for the full license texts.

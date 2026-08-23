@@ -4,10 +4,20 @@
   "displayName": "AI Familiar",
   "unity": "6000.0",
   "description": "An AI assistant inside the Unity Editor. Ask questions, get recommended actions, or approve multi-step plans that edit files and scenes — every change staged for your review before it lands. Bring your own API key (cloud or local models); keys stay on your machine.",
-  "author": { "name": "Cfir.z" },
-  "keywords": ["ai", "assistant", "agent", "editor", "automation", "productivity"],
+  "author": {
+    "name": "Cfir.z"
+  },
+  "keywords": [
+    "ai",
+    "assistant",
+    "agent",
+    "editor",
+    "automation",
+    "productivity"
+  ],
   "documentationUrl": "https://github.com/cfirz/AiFamiliar.Package#readme",
   "changelogUrl": "https://github.com/cfirz/AiFamiliar.Package/blob/main/CHANGELOG.md",
+  "license": "SEE LICENSE IN LICENSE.md",
   "licensesUrl": "https://github.com/cfirz/AiFamiliar.Package/blob/main/Third-Party%20Notices.txt",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.2.1"
