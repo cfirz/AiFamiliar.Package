@@ -101,6 +101,14 @@
     border-top-color: var(--aifam-border);
 }
 
+/* Long card detail (e.g. a full API error message) rendered in the body: the header
+   title is a single ellipsized line, so anything longer wraps down here in full. */
+.activity-card__detail-text {
+    white-space: normal;
+    font-size: 11px;
+    color: var(--aifam-text-secondary);
+}
+
 /* ============================================================
    Modifier: collapsed
    ============================================================ */

@@ -186,9 +186,16 @@ function buildOpenAIRequest(requestData, modelName, isStreaming) {
         requestData.max_tokens ??
         2000;
 
+    // effort and mode share one `reasoning` object — build it when EITHER is present, so pro mode
+    // still reaches the API on a request that sets no explicit effort.
     const reasoningEffort = requestData.reasoning_effort;
-    if (typeof reasoningEffort === 'string' && reasoningEffort.trim()) {
-        req.reasoning = { effort: reasoningEffort.trim() };
+    const reasoningMode = requestData.reasoning_mode;
+    const hasEffort = typeof reasoningEffort === 'string' && reasoningEffort.trim();
+    const hasMode = typeof reasoningMode === 'string' && reasoningMode.trim();
+    if (hasEffort || hasMode) {
+        req.reasoning = {};
+        if (hasEffort) req.reasoning.effort = reasoningEffort.trim();
+        if (hasMode) req.reasoning.mode = reasoningMode.trim();
     }
     if (Array.isArray(requestData.tools) && requestData.tools.length > 0) req.tools = requestData.tools;
     if (requestData.tool_choice != null) req.tool_choice = requestData.tool_choice;
@@ -286,7 +293,7 @@ const handlerImpl = async (rawEvent, responseStream, _context) => {
 
         // ---- Build upstream request ----
         const isStreaming = requestData.stream !== false; // default true
-        const modelName = requestData.model ?? (provider === 'Claude' ? 'claude-sonnet-4-20250514' : 'gpt-4');
+        const modelName = requestData.model ?? (provider === 'Claude' ? 'claude-opus-5' : 'gpt-5.6-sol');
 
         let apiUrl;
         let upstreamHeaders;

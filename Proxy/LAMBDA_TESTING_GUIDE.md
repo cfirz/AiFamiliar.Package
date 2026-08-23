@@ -18,11 +18,11 @@ healthy?" from "is my gateway integration correct?".
 ## Step 2 — Create a test event
 
 Click **Create new test event**, name it (e.g., `chat-mode-streaming`), and paste
-one of the payloads under `Assets/Proxy/tests/`.
+one of the payloads below.
 
 Replace the placeholder API key with a real one before saving.
 
-### Chat mode (streaming) — `tests/test_event_chat_mode.json`
+### Chat mode (streaming)
 
 ```json
 {
@@ -38,7 +38,7 @@ Replace the placeholder API key with a real one before saving.
 }
 ```
 
-### Agent mode (non-streaming) — `tests/test_event_agent_mode.json`
+### Agent mode (non-streaming)
 
 ```json
 {
@@ -102,13 +102,15 @@ Click **Test**. The execution panel shows three things:
 ## Local testing with `sam local invoke`
 
 If you have the SAM CLI and Docker installed, you can invoke the function locally
-without deploying:
+without deploying. Save one of the payloads from Step 2 above (e.g. the chat-mode
+JSON) to a local file, `test_event.json`, then from a terminal in the Proxy folder
+(`Packages/com.cfirz.aifamiliar/Proxy/` for UPM installs, `Assets/AiFamiliar/Proxy/`
+for `.unitypackage` installs) run:
 
 ```bash
-cd Assets/Proxy
 sam build
 sam local invoke AISuggestionsProxyFunction \
-  --event tests/test_event_chat_mode.json
+  --event test_event.json
 ```
 
 Note: `sam local` does not currently emulate Response Streaming — the local invoke

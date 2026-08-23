@@ -34,9 +34,8 @@ This deploys the Node.js Lambda, the Function URL (RESPONSE_STREAM), and a REST 
 with Response Streaming enabled — all from one template.
 
 1. Install AWS SAM CLI: <https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html>
-2. From this directory:
+2. Open a terminal in this Proxy folder — `Packages/com.cfirz.aifamiliar/Proxy/` for UPM installs, `Assets/AiFamiliar/Proxy/` for `.unitypackage` installs (this guide lives in that same folder) — and run:
    ```bash
-   cd Assets/Proxy
    sam build
    sam deploy --guided   # First time only; subsequent deploys can omit --guided
    ```
@@ -59,7 +58,7 @@ ceiling.
    - **Architecture:** `x86_64`
 3. Click **Create function**.
 4. In the **Code** tab, replace the default `index.mjs` with the contents of
-   `Assets/Proxy/index.mjs`. Click **Deploy**.
+   `index.mjs` from the Proxy folder. Click **Deploy**.
 5. In **Configuration → General configuration → Edit**:
    - **Timeout:** `15 min 0 sec` (the new ceiling)
    - **Memory:** `256 MB` (sufficient; raise only if you see cold-start pressure)
@@ -147,7 +146,6 @@ curl -N -X POST https://YOUR_INVOKE_URL/suggest \
 - `index.mjs` — Node.js 20 streaming Lambda handler
 - `package.json` — `"type": "module"`, no runtime deps (uses built-in `fetch`)
 - `template.yaml` — AWS SAM template (provisions Lambda + Function URL + REST API)
-- `tests/test_event_*.json` — API Gateway event payloads for `sam local invoke`
 
 ## Security Notes
 

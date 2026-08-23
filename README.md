@@ -1,6 +1,6 @@
 <img width="1920" height="560" alt="Banner_2" src="https://github.com/user-attachments/assets/262732f0-587e-4c41-b2fe-f5420df736ca" />
 
-# AI Familiar - Unity Editor Plugin
+# AI Familiar
 
 A powerful AI development assistant integrated directly into the Unity Editor — it reads your code, edits your scenes, and imports assets without leaving Unity.
 
@@ -12,6 +12,7 @@ Why not just use a desktop AI coding tool with a free Unity MCP bridge?
 
 - **No external tooling** — no Node install, no separate MCP server process, no second IDE to alt-tab to. It runs in the same window as your scene.
 - **Read-only investigation by design** — every request starts by inspecting your project with read-only tools before anything is proposed.
+- **No arbitrary code execution** — the assistant never generates and runs un-reviewed C#. Every change it makes is a specific, reviewable tool call (create this GameObject, set this field) or a staged file diff you approve — never a script it writes and executes on the fly.
 - **Every mutation is diff-reviewed** with one-click revert (Unity Undo-tracked).
 - **Editor-native** — it understands scenes, GameObjects, components, materials, and prefabs, not just text files.
 - **No subscription, no credits, no markup** — bring your own key or run a local model, and pay your provider directly.
@@ -20,16 +21,20 @@ Why not just use a desktop AI coding tool with a free Unity MCP bridge?
 
 - **Integrated Chat Interface**: Chat with AI directly inside Unity Editor
 - **Persistent Chat Sessions**: Full conversation history with execution plan persistence. Resume interrupted tasks, review past executions, and continue conversations seamlessly across Unity sessions and domain reloads
-- **Modern UX**: Slash commands (`/fix`, `/explain`, `/test`, plus local `/compact`, `/context`, and `/new-chat` that execute on Enter), `@`-context picker, inline diff view, model selector, execution progress rail, keyboard shortcuts, conversation history sidebar, **conversation tabs** for switching between open conversations, a card-based **Activity Transcript** with an ambient status rail, and optional **clarifying-question** + **plan-summary** cards so the agent can confirm intent before acting
+- **Modern UX**: Slash commands (`/fix`, `/explain`, `/test`, plus local `/compact`, `/context`, and `/new-chat` that execute on Enter), a fuzzy `@`-mention picker (type `@` to search scripts, scenes, prefabs, materials, text assets, folders, and scene GameObjects, ranked as you type — pick one, or type a path yourself), inline diff view, model selector, execution progress rail, keyboard shortcuts, conversation history sidebar, **conversation tabs** for switching between open conversations, a card-based **Activity Transcript** with an ambient status rail, and optional **clarifying-question** + **plan-summary** cards so the agent can confirm intent before acting
+  - **Attach just part of a file**: append a line range to a mention — `@Assets/Scripts/Player.cs:10-50` — to send only those lines instead of the whole file. You can type a bare file name too (`@Player.cs:10-50`) — it attaches on send when it names exactly one file. Whatever you attach is sent exactly as attached, in every context mode.
 - **Live Task Checklist**: For multi-step work, the assistant maintains a visible checklist above the conversation — each step shows as pending (○), in progress (▶), done (✓), or cancelled (✗), updating live while it investigates or executes a plan. Saved with the conversation and survives editor recompiles.
 - **Visual Context (Screenshots)**: One-click capture of the Game or Scene view, attached to the next request so the LLM can reason about what you see
+- **Agent Self-Verification (Vision)**: The assistant can take its own screenshot of the Game or Scene view mid-task — after a scene or UI change, for example — to visually check its own work before telling you it's finished. Uses the same Settings ▸ Keys ▸ Attach Screenshots toggle as the camera button above, and only engages with a vision-capable model.
 - **Drag-and-Drop Context**: Drag GameObjects from the Hierarchy or files from the Project window into the chat to attach them as references for the AI.
-- **Live Scene & Editor Access (Native Tool Use)**: When using a tool-capable model (Claude 4.x or GPT-5.x), the AI can call into the Editor directly — inspect the active scene's hierarchy, read GameObject components, read material properties, modify GameObjects and assets, run tests, or recompile — as part of investigating your request and carrying out approved actions. All mutations are Unity Undo-tracked, so Ctrl-Z reverts any change the AI makes. Menu-item execution is opt-in via Settings ▸ Scene/Editor Tools ▸ Allow Menu Execution. Discovery tools let the AI enumerate project files by glob (`list_files`), search for files semantically (`find_files_semantic`), list all scene assets (`list_scenes`), and walk a scene's hierarchy on demand at any depth (`get_scene_hierarchy`) instead of relying on a pre-loaded snapshot.
+- **Live Scene & Editor Access (Native Tool Use)**: When using a tool-capable model (Claude 4.x or GPT-5.x), the AI can call into the Editor directly — inspect the active scene's hierarchy, read GameObject components, read material properties, modify GameObjects and assets, run tests, recompile, check the Editor's own state (play mode, compile status, active build target), read or define project tags and layers, and read or clear the Console with severity filtering — as part of investigating your request and carrying out approved actions. All mutations are Unity Undo-tracked, so Ctrl-Z reverts any change the AI makes. Menu-item execution is opt-in via Settings ▸ Scene/Editor Tools ▸ Allow Menu Execution. Entering, pausing, or stepping Play mode is a separate opt-in, off by default, via Settings ▸ Scene/Editor Tools ▸ Allow Play Mode Control — useful for verifying runtime behavior, but entering Play mode can trigger a script recompile that ends the assistant's current turn. Discovery tools let the AI enumerate project files by glob (`list_files`), search for files semantically (`find_files_semantic`), list all scene assets (`list_scenes`), and walk a scene's hierarchy on demand at any depth (`get_scene_hierarchy`) instead of relying on a pre-loaded snapshot.
 - **Import Assets from Your Local Asset Store Cache**: The AI can list the `.unitypackage` files you have already downloaded via Unity's Asset Store and import one directly — Unity's own import-selection dialog appears as the approval step. If a package isn't downloaded yet, the AI provides a store search link and can retry once you've clicked Download in Package Manager ▸ My Assets. Silent import (no dialog) is available as an opt-in in Settings ▸ Execution ▸ Asset Import.
+- **Search & Download Free CC0 Assets**: The AI can search Poly Haven and ambientCG's public libraries for royalty-free, no-attribution-required HDRIs, PBR textures, and 3D models, and download a chosen result straight into `Assets/CC0Assets/` (path configurable) — each download includes a `SOURCE.txt` noting the asset name, author, and license. Searching is always available; downloading is an opt-in in Settings ▸ Execution ▸ Asset Import ▸ Allow CC0 Asset Download (off by default).
 - **Code & Scene Editing** (after you approve an action or plan):
   - **Code Editing**: Intelligently edit existing scripts with full context
   - **File Management**: Create, delete, and modify files automatically
   - **Scene Operations**: Create and modify GameObjects, add components, and create assets (Materials, Prefabs)
+    - **UI layout**: Set anchors, pivot, position, and size on uGUI elements (buttons, panels, text, etc.) via 16 named anchor presets (top-left, stretch-all, and so on) plus explicit overrides
     - **Robust targeting**: Works with inactive objects and supports full hierarchy paths (e.g., `Parent/Child/ObjectName`) to disambiguate names
     - **Active scene preference**: Resolves names in the active scene before other loaded scenes to avoid collisions
     - **Interactive resolution**: If an object isn’t found, the agent can suggest candidates from the scene and ask you to confirm the correct one
@@ -181,6 +186,10 @@ When you approve a direct action or a plan, the AI can perform the following act
 - Active internet connection (for cloud models)
 - API key from OpenAI, Anthropic, or Google Gemini (or local LLM setup via LM Studio)
 - No AWS account or proxy deployment required — the direct path is the default
+
+## Support
+
+Found a bug, hit a rough edge, or missing a feature? Report it on the public issue tracker: https://github.com/cfirz/AiFamiliar.Package/issues — or use **Tools ▸ AI Familiar ▸ Report an Issue** inside the editor. Please include the plugin version from the Settings ▸ About tab and any relevant Console output. Questions and ideas are welcome in the repository's Discussions tab.
 
 ## License
 

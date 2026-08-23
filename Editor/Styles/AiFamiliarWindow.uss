@@ -66,6 +66,39 @@
     color: var(--aifam-text-secondary);
 }
 
+/* Context toggles row (Include Console Logs / Auto-detect scope / Auto-approve).
+   Unity's default field label reserves a fixed min-width, so a short label sits
+   far from its checkbox while a long one sits right next to it. Collapse each
+   label to its natural width so every label->checkbox gap and every
+   checkbox->next-label gap is identical. */
+.aifam-context-toggle {
+    margin-left: 0;
+    margin-right: 16px;
+}
+
+.aifam-context-toggle .unity-base-field__label {
+    min-width: 0;
+    width: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 0;
+    margin-right: 6px;
+    padding-right: 0;
+}
+
+.aifam-context-toggle .unity-base-field__input {
+    min-width: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.aifam-context-toggle .unity-toggle__checkmark {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 /* Scroll view / scroller styling */
 .ai-familiar-window Scroller .unity-base-slider__tracker {
     background-color: var(--aifam-bg-root);
@@ -178,6 +211,16 @@
     margin-bottom: 12px;
 }
 
+/* Positioned host for the transcript — lets the "jump to latest" pill float over the
+   scroll view. Takes over the flex sizing the scroll view used to get from its parent. */
+.transcript-stack {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-height: 0;
+    position: relative;
+}
+
 /* Message scroll view */
 .message-scroll-view {
     flex-grow: 1;
@@ -186,6 +229,36 @@
     min-height: 0;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+/* Floating "jump to latest" pill — shown only while the user has scrolled up and new
+   output has arrived since. Hidden via inline display from the controller. */
+.transcript-jump-latest {
+    position: absolute;
+    bottom: 12px;
+    align-self: center;
+    height: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-width: 1px;
+    border-radius: 12px;
+    font-size: 11px;
+    background-color: var(--aifam-surface-raised);
+    border-color: var(--aifam-border-strong);
+    color: var(--aifam-text-primary);
+}
+
+.transcript-jump-latest:hover {
+    background-color: var(--aifam-surface-hover);
+    border-color: var(--aifam-accent);
+}
+
+/* Rows stacked directly above the composer (settings row, context toggles).
+   They carry the same left inset as .prompt-field so their first label lines up
+   with the prompt box's left border instead of sitting a few pixels outside it. */
+.aifam-composer-aligned-row {
+    margin-left: 3px;
+    padding-left: 0;
 }
 
 /* Settings row - contains Mode, Context Detail, and Model */
@@ -478,6 +551,11 @@
 .prompt-field {
     height: 120px;
     margin-bottom: 5px;
+    /* Pinned rather than inherited from Unity's default field margin, because
+       .aifam-composer-aligned-row matches this inset to line the rows above the
+       composer up with its border. The two must be changed together. */
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 .prompt-field .unity-base-text-field__input {
@@ -837,13 +915,15 @@
     color: var(--aifam-text-secondary);
 }
 
-/* Slash/Context Picker Overlays */
+/* Slash/Context Picker Overlays — mounted inside .prompt-container (position: relative) and
+   anchored to its top edge so they open just above the composer whatever its height. */
 .slash-picker-overlay,
 .context-picker-overlay {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 80px;
+    bottom: 100%;
+    margin-bottom: 4px;
     background-color: var(--aifam-surface-raised);
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -931,10 +1011,28 @@
 }
 
 /* Execution Rail */
+.execution-rail-root {
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+/* The rail is pinned chrome, not content — so it takes the strip background
+   shared with the tab bar / ambient rail / status footer rather than the
+   card fill it used to have.  Against the transcript's --aifam-bg-root that
+   reads as a recessed bar in both themes. */
 .execution-rail {
-    background-color: var(--aifam-surface-raised);
-    border-bottom-width: 1px;
-    border-bottom-color: var(--aifam-border);
+    background-color: var(--aifam-bg-bar);
+    border-bottom-width: 2px;
+    border-bottom-color: var(--aifam-border-strong);
+    flex-shrink: 0;
+}
+
+/* Faked drop shadow under the rail — UI Toolkit has no box-shadow, so a thin
+   scrim band stands in for one and sells "content scrolls under this". */
+.execution-rail__shadow {
+    height: 3px;
+    flex-shrink: 0;
+    background-color: var(--aifam-overlay-scrim);
 }
 
 /* Plan Review Panel */

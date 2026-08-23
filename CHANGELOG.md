@@ -5,6 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.50.0] - 2026-08-23
+
+### Added
+- **Search Free CC0 Assets**: The assistant can now search Poly Haven and ambientCG's public libraries for royalty-free, no-attribution-required HDRIs, PBR textures, and 3D models straight from chat — no account or extra API key needed for either service.
+- **Download CC0 Assets Into Your Project**: Once the assistant has found something worth using, it can download it, unpack it, and drop it into `Assets/CC0Assets/` (path configurable) ready to use — each download comes with a `SOURCE.txt` noting the asset name, source, author, and license. Off by default; turn it on in Settings ▸ Execution ▸ Asset Import ("Allow CC0 Asset Download"). Searching works regardless of this setting.
+- **Report an Issue**: A new **Tools ▸ AI Familiar ▸ Report an Issue** menu item, plus matching links on the Settings ▸ About tab, take you straight to the public issue tracker.
+- **@-Mention Picker, Rebuilt**: Typing `@` in the composer now opens a fuzzy-ranked picker across scripts, scenes, prefabs, materials, text assets, folders, and scene GameObjects, instead of a flat file list — it opens just above the composer so you can still see what you're typing, and Up/Down + Enter picks a row. You can also attach just part of a file with a line range — e.g. `@Assets/Player.cs:10-50` — instead of the whole thing; the range you're typing shows on every row of the list so you can see what a pick will attach. And you don't have to pick from the list: a hand-typed `@Player.cs:10-50` (or `@Scripts/Player.cs`) attaches on send as long as it names exactly one file; if it's ambiguous, a banner asks you to pick it from the popover instead of guessing.
+- **The Assistant Can See What It Just Did**: After a scene or UI change, the assistant can take its own screenshot of the Game or Scene view to check the result before telling you it's finished — the same capability behind the manual camera button, just agent-initiated. Governed by the existing "Attach Screenshots" setting, and only engages with a vision-capable model.
+- **Play Mode Control**: Ask the assistant to enter, pause, resume, step, or exit Play mode and it does so directly from chat — no confirmation card — when it needs to verify runtime behavior. Off by default — turn it on in Settings ▸ Execution ▸ Scene / Editor Tools ▸ Allow Play Mode Control (with it off, the assistant tells you which setting to enable). Entering Play mode usually reloads the editor, which ends the assistant's current turn; the conversation is saved first, and it verifies what happened and reports back once you send your next message (e.g. "what do you see? stop play mode"). Play mode is never entered from inside a multi-step plan — build first, then ask to verify.
+- **UI Layout Editing**: The assistant can now set a uGUI element's anchors, pivot, position, and size directly — including all 16 of Unity's named anchor presets (top-left, stretch-all, and so on) — instead of only nudging generic component fields.
+- **More Editor Awareness**: The assistant can now read Editor state (play mode, compile status, active build target), read and define project tags and layers, ping or frame a GameObject in the Scene view when selecting it, and filter or clear Console output by severity.
+
+### Removed
+- **The Deprecated Legacy Lessons System**: The old embedding-only "lessons" capture tier — already superseded by the readable Project Memory system since 1.46.2, and hidden behind a deprecated toggle since then — has been removed entirely, along with its Settings ▸ Memory section. If you still had it switched on, your existing lessons are (as before) imported once into a Project Memory session log automatically; nothing is lost.
+
+### Fixed
+- **Attached Files Now Actually Reach The Assistant**: Files you explicitly attached — via the @-mention picker, drag-and-drop, or "Add to AI Chat" — previously went nowhere under the default context setting (JIT); the assistant never saw them unless you switched to a different context mode. They're now included regardless of which context mode you use.
+- **Removing an Attached File's Chip Now Actually Detaches It**: Dismissing the chip for a file you'd picked via the @-mention picker could leave the file still riding along with your next message even though its chip was gone.
+
+## [1.49.0] - 2026-08-05
+
+### Added
+- **New Models From All Three Providers**: OpenAI's **GPT-5.6** family (Sol, Terra, Luna — Sol is the new OpenAI default), Anthropic's **Claude Opus 5** (the new overall default), **Claude Sonnet 5**, and **Claude Fable 5**, and Google's **Gemini 3.6 Flash** (the new Google default), **Gemini 3.5 Flash-Lite**, and **Gemini 3.1 Pro (Preview)**.
+- **Turn Down A Proposed Plan**: the plan approval card has a **Cancel** button, and the ⚡ suggested-action card has a **Dismiss** button. Either one discards the proposal — nothing runs and nothing is sent to the model — and the conversation goes quiet until you type your next prompt. Previously every button on those cards either executed something or spent another request, so the only way out was to ignore the card. The assistant is also told you turned it down, so your next message doesn't get met with the same suggestion again.
+- **Third-Party License Notices**: the package now ships a `Third-Party Notices.txt` at its root covering the bundled MIT-licensed components (Newtonsoft.Json and the Microsoft Roslyn/.NET libraries).
+- **GPT-5.6 Pro Mode**: OpenAI removed the separate `-pro` model for GPT-5.6 and made it a request setting instead. The picker still offers "GPT-5.6 Sol (Pro)" as its own entry, which now requests pro mode on the base model behind the scenes.
+- **Reasoning Effort Gains `xhigh` and `max`**: the two highest settings OpenAI's current models accept.
+
+### Changed
+- **Retired Models Removed From The Picker**: models the providers have shut down or scheduled for shutdown are gone — Claude Opus 4.1 (retires August 5), GPT-5 / GPT-5 Mini / GPT-5 Nano / o3 / o3-mini (December 11), and Gemini 2.5 Pro / 2.5 Flash (October 16). **If your saved model was one of these, you're moved to that same provider's recommended replacement automatically** — you will not be switched to a different provider or asked for a different API key.
+- **The Whole Memory Folder Is Now Shareable**: the .gitignore rules the plugin maintains now keep all of `Assets/AiFamiliarData/Memory/` tracked — session logs included — instead of just the curated `MEMORY.md`. Your team gets the full project memory, not only the hand-edited summary. Existing projects pick this up automatically the next time the setup check runs; everything else under `AiFamiliarData` stays local as before.
+- **A Quieter Console**: the plugin's internal diagnostic chatter no longer prints to the Unity console. What remains is only what's meant for you — actionable warnings, errors, and a few deliberate notices (like the once-per-update version line).
+- **Documentation Compliance Pass (Asset Store)**: the README's product pitch now uses generic provider language, the embedded marketing image was removed, and the license section correctly states distribution under the Asset Store EULA with MIT-licensed third-party components (see `Third-Party Notices.txt`).
+- **Reasoning Effort Now Actually Reaches The API**: the Reasoning Effort setting was previously ignored for chat requests — it was only ever applied internally. Selecting a value now affects your requests.
+- **Reasoning Effort Control Shows For All GPT-5.x Models**: it was previously hidden for plain GPT-5.4 and GPT-5.5 even though both accept the setting.
+- **"Screenshot Validation" Setting Is Now "Attach Screenshots"**: the old toggle did nothing at all — no code read it. It is now the real master switch for the camera button, and it defaults to on.
+
+### Fixed
+- **The Screenshot Button Now Actually Sends The Screenshot**: clicking the camera icon captured your Game/Scene view and showed a "Screenshot" chip, but the image was never attached to the request — the assistant answered as if it had seen nothing. It is now sent to the model, and the chip no longer prepends a stray `[Context: Screenshot]` line to your prompt.
+- **Taking A Second Screenshot No Longer Discards It**: re-clicking the camera while a screenshot was already attached quietly dropped the new capture, leaving a chip that promised an attachment that was gone. The same fault dropped a pending screenshot when you switched conversation tabs and came back.
+- **Screenshots Survive Occluded Windows**: capture read raw desktop pixels at the Game/Scene view's position, so if the AiFamiliar window (or anything else) covered it, you sent a picture of that instead. Edit-mode capture now renders the camera directly and is unaffected by what's on top — and it no longer opens a Game view you didn't ask for. Note that in edit mode a camera render excludes Screen Space - Overlay UI; enter Play mode for a true-to-screen capture of your UI.
+- **The Camera Button Explains Itself**: it is disabled with a reason in its tooltip on models that can't accept images (local LLMs), and capture failures now say what actually went wrong instead of a fixed "make sure a Game or Scene view is visible".
+- **Screenshots No Longer Clutter Your Project**: captures were written into `Assets/AiFamiliarData/Screenshots/`, where Unity imported each one as a texture asset. They now go to `Library/AiFamiliarCache/screenshots/`, outside the asset pipeline.
+- **Corrected Context Window For Claude Opus 4.8 / 4.7**: both were reported as 200K when they actually serve 1M. The context meter was showing a small fraction of the real budget, and plan-size limits were being capped far lower than necessary.
+- **Corrected Cost Estimates Across Every Provider**: pricing had drifted badly — Claude Opus was billed at $15/$75 per million tokens instead of $5/$25, Haiku at a quarter of its real rate, and every GPT-5-class model at a flat $20/$60. An unrecognized OpenAI model was priced at legacy GPT-3.5 rates, under-reporting its cost by roughly 60×.
+- **Corrected Claude Opus 4.1 Model ID**: the plugin sent a wrong date suffix, which the API would have rejected.
+- **Requests To Claude Opus 5 No Longer Fail**: a leftover thinking-budget value from an older model would have been sent to models that no longer accept it, producing a hard API error.
+- **Saved Model Selection Can No Longer Silently Switch Providers**: if your stored model was removed by a plugin update, the main window would fall back to an OpenAI model without saying so — producing a confusing "Invalid API key format" error for users with only an Anthropic or Google key.
+- **"Regenerate" No Longer Reports A Cancellation**: clicking Regenerate on a plan dropped a misleading "Execution cancelled." notice into the conversation before the new plan appeared. Nothing had been cancelled — the old plan was just being torn down to make room.
+- **Turned-Down Plans Stay Gone**: if you had automatic conversation saving switched off, a plan you walked away from could come back on the next script recompile, still waiting for approval.
 
 ## [1.48.0] - 2026-07-29
 
@@ -264,7 +314,7 @@ Close-the-loop patch — finishes the error-surfacing work from 1.39.0 on the fa
 - **Conversation Tabs**: Browser/IDE-style tab strip above the output area for switching between open conversations in both Chat and Agent modes. Tabs sit just under the toolbar and above the status and execution rails. Each tab shows the conversation title, an active-state highlight, a busy dot during streaming or plan execution, a close button, and there's a trailing **+** to start a new conversation. Up to 10 tabs are kept open at once; the least-recently-focused is evicted when exceeded. Tabs persist across domain reloads (`[SerializeField]`) and Unity restarts (`EditorPrefs`); History sidebar selections auto-pin as tabs. Streaming chats pin to the originating tab so deltas, completions, and errors land on the conversation that initiated the request even if you've switched away. The execution rail aligns with the *active* tab's plan state, so an in-flight plan in tab A no longer bleeds an "Executing Plan" label into tab B.
 
 ### Changed
-- **Lambda Proxy Rewritten in Node.js 20 with End-to-End Streaming**: The AWS Lambda proxy (`Assets/Proxy/`) was rewritten from Python (`lambda_function.py`) to Node.js 20 (`index.mjs`) using `awslambda.streamifyResponse`. The previous Python handler called `urlopen().read()` which buffered the entire upstream response before returning to API Gateway, defeating end-to-end streaming and causing 504 Gateway Timeout errors on slow models (GPT-5-pro, o3, Opus extended-thinking). The new handler pipes upstream chunks straight to the client. Provider routing (OpenAI Responses API / Anthropic Messages API), `Authorization`/`X-API-Key` validation, OpenAI Chat→Responses message-to-input conversion, native tool-use forwarding, and CORS behavior are preserved verbatim. The SAM template (`template.yaml`) now provisions both endpoints from one stack: the existing **Lambda Function URL** with `InvokeMode: RESPONSE_STREAM`, and a new **API Gateway REST API** with `ResponseTransferMode: STREAM` (the Response Streaming feature launched 2025-11-19). Both endpoints support 15-minute request timeouts. **Migration**: redeploy with `sam build && sam deploy` from `Assets/Proxy/`. The REST API endpoint type must be `REGIONAL` (not Edge-optimized — its 30s idle timeout would cut off slow reasoning models). Existing client (`ProxyClient.cs`) needs no changes — it already streams via `ReadAsStreamAsync` and tolerates `:` SSE keep-alives. See updated `PROXY_SETUP_GUIDE.md` and `TROUBLESHOOTING_502.md`.
+- **Lambda Proxy Rewritten in Node.js 20 with End-to-End Streaming**: The AWS Lambda proxy (in the package's `Proxy/` folder) was rewritten from Python (`lambda_function.py`) to Node.js 20 (`index.mjs`) using `awslambda.streamifyResponse`. The previous Python handler called `urlopen().read()` which buffered the entire upstream response before returning to API Gateway, defeating end-to-end streaming and causing 504 Gateway Timeout errors on slow models (GPT-5-pro, o3, Opus extended-thinking). The new handler pipes upstream chunks straight to the client. Provider routing (OpenAI Responses API / Anthropic Messages API), `Authorization`/`X-API-Key` validation, OpenAI Chat→Responses message-to-input conversion, native tool-use forwarding, and CORS behavior are preserved verbatim. The SAM template (`template.yaml`) now provisions both endpoints from one stack: the existing **Lambda Function URL** with `InvokeMode: RESPONSE_STREAM`, and a new **API Gateway REST API** with `ResponseTransferMode: STREAM` (the Response Streaming feature launched 2025-11-19). Both endpoints support 15-minute request timeouts. **Migration**: redeploy with `sam build && sam deploy` from the Proxy folder. The REST API endpoint type must be `REGIONAL` (not Edge-optimized — its 30s idle timeout would cut off slow reasoning models). Existing client needs no changes — it already streams and tolerates `:` SSE keep-alives. See `PROXY_SETUP_GUIDE.md` and `TROUBLESHOOTING_502.md`.
 
 ### Fixed
 - **Truncated Responses After Switching to a Large-Output Model**: `RequestFactory.CreateSuggestRequest` only capped `max_tokens` at the per-model ceiling but never raised a stale low value. Switching from Claude Haiku to GPT-5.5 or Claude Opus 4.7 left the old 8192 in place, causing the OpenAI Responses API to return `status: "incomplete"` with `incomplete_details.reason: "max_output_tokens"`. A new per-model `RecommendedMaxOutputTokens` field in `ModelCapabilities` supplies a floor; `CreateSuggestRequest` now raises `maxTokens` to that floor before applying the ceiling cap. Recommended values: GPT-5.5 / 5.5-pro → 32,768; GPT-5.4 family / GPT-5 family → 16,384; Claude Opus 4.7 / 4.5 / 4.1 / Sonnet 4.6 → 65,536; Claude Haiku 4.5 → 16,384; O3 / O3-mini / LM Studio → unchanged at 8,192. `ModelSelector` defaults realigned to match.
@@ -401,18 +451,7 @@ Close-the-loop patch — finishes the error-surfacing work from 1.39.0 on the fa
 
 ## [1.34.0] - 2026-02-27
 
-### Added
-- **Expanded Test Infrastructure**: Comprehensive mock factory system for testing all major subsystems
-  - Domain-specific factories for orchestration, conversation, context, and execution mocking
-  - Fluent `TestDataBuilder` API for constructing complex test scenarios with chainable methods
-- **Integration Test Suite**: Five new integration test files covering end-to-end workflows for plan generation, step execution, conversation persistence, scene operations, and file operations
-- **Refactored AI Assistant Window**: New controller-based `AIAssistantWindowRefactored` decomposes the monolithic 2119 LOC window into 9 focused files (~2870 LOC total) using controller composition with event-driven communication
-  - Dedicated controllers for conversation management, message rendering, plan editing, file change review, and status display
-  - Centralized `WindowState` container and `WindowStateManager` for serialization-friendly state with domain reload resilience
-
-### Changed
-- **UI Architecture**: Main editor window refactored from monolithic class to controller composition pattern, reducing the primary window file from 2119 to ~750 LOC (65% reduction)
-- **Project Organization**: Moved `TEST_COVERAGE_ANALYSIS.md` to `Docs/` folder; removed duplicate root `CHANGELOG.md`
+Internal maintenance release.
 
 ## [1.33.0] - 2026-01-31
 
@@ -441,16 +480,7 @@ Close-the-loop patch — finishes the error-surfacing work from 1.39.0 on the fa
 
 ## [1.32.0] - 2026-01-24
 
-### Changed
-- **Plugin Renamed for Asset Store Compliance**: Entire plugin systematically renamed from `UnityAgent` to `AiEditorAgent`
-  - Assembly definition: `UnityAgent.Editor` → `AiEditorAgent.Editor`
-  - Package identifier: `com.cfirz.unityagent` → `com.cfirz.aieditoragent`
-  - Folder structure: `Assets/Editor/UnityAgent` → `Assets/Editor/AiEditorAgent`
-  - Data folder: `Assets/UnityAgentData` → `Assets/AiEditorAgentData`
-  - UnityPackage export path: `Assets/AiEditorAgent/` (Asset Store compliant base folder name)
-  - Build scripts, CI/CD workflows, and all documentation updated to reflect new naming
-- **Automatic Migration**: Config files automatically migrate from old `UnityAgentData` location to new `AiEditorAgentData` location on first load
-- **Git History Preserved**: All renames performed using `git mv` to preserve file history and Unity .meta GUIDs
+Internal maintenance release.
 
 ## [1.31.0] - 2026-01-18
 
@@ -503,7 +533,7 @@ Close-the-loop patch — finishes the error-surfacing work from 1.39.0 on the fa
   - Excludes `Config.meta` / `Rules.meta` from package output (these folders are intentionally excluded when empty).
   - Creates/updates a package `.gitignore` to ignore `*.unitypackage` and common build artifacts.
 - **EmbeddingService quota handling**: When OpenAI returns quota/rate-limit errors (e.g., HTTP 429 / `insufficient_quota`), embeddings are temporarily disabled (5 minute cooldown) and warnings are de-duplicated to avoid log/API spam.
-- **Lambda proxy update required**: If using the AWS Lambda proxy, redeploy `Assets/Proxy/lambda_function.py` to prevent "Unsupported parameter: 'response_format'" errors with OpenAI
+- **Lambda proxy update required**: If using the AWS Lambda proxy, redeploy your Lambda's `lambda_function.py` to prevent "Unsupported parameter: 'response_format'" errors with OpenAI
 
 ### Fixed
 - **Scene operations on inactive objects**: GameObject lookups now include inactive objects, so `modify_gameobject`, `delete_gameobject`, `set_active`, and parent lookups work even when objects (or parents) are inactive.
@@ -544,33 +574,27 @@ Close-the-loop patch — finishes the error-surfacing work from 1.39.0 on the fa
 
 ### Fixed
 - **UPM (Git URL) installs**: Package builds now include (or generate) required `.meta` files so Unity doesn’t ignore assets in immutable Git-based UPM installs.
-- **Package contents**: Build cleanup now removes generated `package.json.meta`, `README.md.meta`, and `CHANGELOG.md(.meta)` between builds to avoid stale artifacts.
 
 ### Changed
 - **UPM build output**: `CHANGELOG.md` is now copied into the built UPM package alongside `README.md`.
-- **Git ignore**: Keeps `Packages/**/*.meta` tracked so Git-based UPM installs can import packages without missing metas.
-- **Package template version**: Updated `Assets/Editor/Build/Templates/package.json` to `1.26.1`.
-- **Repo cleanup**: Removed stale `Assets/Scripts.meta`.
 
 ## [1.26.0] - 2026-01-10
 
 ### Added
-- **⚠️ Lambda update required (existing proxy users)**: If you use the included AWS Lambda proxy, you must redeploy/update your deployed `Assets/Proxy/lambda_function.py` to this version to keep OpenAI requests working correctly (Responses API routing + request/response shaping).
+- **⚠️ Lambda update required (existing proxy users)**: If you use the included AWS Lambda proxy, you must redeploy/update your deployed Lambda's `lambda_function.py` to this version to keep OpenAI requests working correctly (Responses API routing + request/response shaping).
 - **OpenAI Responses API support (proxy + client parsing)**: The included Lambda proxy now routes OpenAI requests via the Responses API, and the Unity client can parse both streaming and non-streaming Responses formats.
 - **Expanded model catalog**: Added support for newer OpenAI/Anthropic model IDs (including GPT-5 family, GPT-4.1 family, o3 family, and Claude Opus 4 / 4.1).
 - **Model capability shaping**: Requests are now shaped per provider/model (token limit field selection, temperature support, structured output support, and conservative output ceilings).
 - **Reasoning controls in Settings**:
   - **Reasoning Effort** for OpenAI o-series models (low/medium/high)
   - **Thinking Budget** (tokens) for Claude extended thinking models
-- **Testability improvements**: Added `IProxyClient` + `MockProxyClient` so StepExecutor tests can run without real network calls or API keys.
 
 ### Changed
 - **Token limit handling**: OpenAI requests prefer `max_output_tokens` (Responses API), and agent-mode output caps are no longer universally clamped to 4096 (now capped per model capability).
 - **Settings/model persistence**: Model selection and provider inference are now provider-aware (including Local model round-trip), reducing config drift across reloads.
 
 ### Fixed
-- **Agent JSON extraction**: Improved `AIAgentParser` JSON extraction so validation produces clearer errors (e.g., missing required fields) and JSON-in-code-block cases parse more reliably.
-- **Test runner stability**: Avoids writing API key files / refreshing `AssetDatabase` in test runs; StepExecutor tests avoid deadlocks and hanging by using proper async patterns and mocks.
+- **Agent JSON extraction**: Improved JSON extraction so validation produces clearer errors (e.g., missing required fields) and JSON-in-code-block cases parse more reliably.
 
 ## [1.25.0] - 2025-12-12
 
@@ -626,58 +650,9 @@ Close-the-loop patch — finishes the error-surfacing work from 1.39.0 on the fa
 
 ## [1.22.0] - 2025-12-04
 
-### Added
-- **Obfuscation Integration**: Automatic DLL obfuscation in package build pipeline
-  - Obfuscar integration for code protection during package builds
-  - Automatic Obfuscar detection from multiple installation sources (Chocolatey, NuGet, local tools)
-  - Graceful fallback to un-obfuscated DLL if Obfuscar is not available
-  - Obfuscated DLLs stored in `Build/Obfuscated/` directory
-- **Command-Line Build Support**: Build packages from Unity command line
-  - `BuildPackageFromCommandLine.cs` enables batch mode package building
-  - `build_package.ps1` PowerShell script for local automated builds
-  - Automatic Unity installation detection and compilation validation
-  - Comprehensive error reporting and troubleshooting guidance
-- **CI/CD Automation**: GitHub Actions workflow for automated package builds
-  - Automated package building on push to main/development branches
-  - Manual workflow dispatch support
-  - Automatic Obfuscar installation in CI environment
-  - Build artifacts uploaded for download (packages and obfuscated DLLs)
-  - Build logs uploaded for debugging
-- **Obfuscar Installation Script**: Automated Obfuscar installation tool
-  - `tools/install_obfuscar.ps1` supports multiple installation methods
-  - Chocolatey, NuGet, and GitHub direct download installation options
-  - Automatic verification of installation success
-  - Cross-version compatibility handling for NuGet packages
-- **Publishing Guide**: Comprehensive documentation for package publishing
-  - Pre-publishing checklist for code quality, documentation, and security
-  - Obfuscation setup and configuration instructions
-  - Build automation guide for local and CI/CD environments
-  - Package structure and validation guidelines
-
 ### Changed
-- **PackageBuilder**: Enhanced build pipeline with obfuscation support
-  - `HandleDll()` now includes obfuscation step before copying to package
-  - `PrepareDirectories()` creates `Build/Obfuscated/` directory
-  - Build process automatically uses obfuscated DLL when available
-  - Improved logging indicates whether obfuscated or raw DLL was used
-- **Build Process**: Streamlined package creation workflow
-  - Obfuscation integrated seamlessly into existing build pipeline
-  - Build continues successfully even if obfuscation fails (uses raw DLL)
-  - Enhanced error handling and logging throughout build process
-- **Package Structure**: Proxy files now included in package distribution
-  - Proxy setup guides and Lambda function code included in package `Proxy/` folder
-  - Users can access proxy deployment guides directly from installed package
-  - `CopyProxyFiles()` method automatically includes proxy files during build
-  - Proxy files moved from root `proxy/` directory to `Assets/Proxy/` for better organization
-- **Project Organization**: Improved file structure for packaging
-  - Moved proxy files from `proxy/` to `Assets/Proxy/` for inclusion in package builds
-  - Moved README.md from `Assets/Editor/UnityAgent/README.md` to `Assets/README.md` for package distribution
-
-### Fixed
-- **Project Cleanup**: Removed obsolete files and reorganized structure
-  - Moved `SSEParser.cs` from `Assets/Editor/AIAssistant/API/` to `Assets/Demo/` for demo purposes
-  - Deleted old execution transcripts from `Assets/Editor/AIAssistant/ExecutionTranscripts/`
-  - Cleaned up unused meta files and temporary documentation
+- **Proxy Files Included in the Package**: The optional AWS Lambda proxy's setup guides and Lambda function code now ship inside the installed package's `Proxy/` folder, so you can deploy or troubleshoot it without visiting the repository.
+- Internal build-pipeline improvements.
 
 ## [1.21.0] - 2025-12-04
 
@@ -722,20 +697,7 @@ Close-the-loop patch — finishes the error-surfacing work from 1.39.0 on the fa
 
 ## [1.19.0] - 2025-12-04
 
-### Changed
-- **Project Restructuring**: Major codebase reorganization
-  - Renamed main plugin folder from `Assets/Editor/AIAssistant` to `Assets/Editor/UnityAgent`
-  - Namespace updated to `UnityAgent.Editor` for better organization
-  - Created `UnityAgent.Editor.asmdef` assembly definition for proper dependency management
-- **UI Architecture Refactoring**: Improved separation of concerns
-  - Moved UI components to `UnityAgent/UI/Components` and `UnityAgent/UI/Controllers`
-  - Introduced `AgentExecutionController` and `ResponseHandler` for better logic separation
-
-### Added
-- **Packaging System**: New build tools for UPM package generation
-  - `PackageBuilder` tool to automate package creation
-  - Support for creating `com.cfirz.unityagent` UPM package
-  - Placeholder support for DLL obfuscation in build pipeline
+Internal maintenance release.
 
 ## [1.18.0] - 2025-12-03
 
