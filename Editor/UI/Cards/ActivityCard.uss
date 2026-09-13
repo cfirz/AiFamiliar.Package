@@ -1,67 +1,255 @@
 /* ============================================================
-   ActivityCard.uss — Base shell shared by every card kind.
-   BEM naming: block = activity-card, element = __, modifier = --
-   Color palette matches the existing dark theme in AiFamiliarWindow.uss.
+   ActivityCard.uss — Timeline-spine transcript styling.
+
+   Two layers live here:
+   1. .tl-row / .tl-dot — the spine chrome every transcript row is
+      wrapped in (see TimelineRowUI). Rows stack with zero margin so
+      the per-row line segments join into one continuous spine;
+      vertical rhythm comes from per-kind row padding.
+   2. .activity-card — the shared card shell. QUIET by default (no
+      fill, no border: a compact line sitting on the spine); decision
+      cards opt back into a framed look via --boxed.
+
+   BEM naming; every color comes from the --aifam-* theme tokens.
    ============================================================ */
 
-/* ---- Block ---- */
+/* ================= Timeline rows ================= */
+
+.tl-row {
+    flex-direction: row;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.tl-row__gutter {
+    width: 22px;
+    flex-shrink: 0;
+}
+
+.tl-row__line {
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--aifam-border);
+}
+
+.tl-row__content {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+/* Per-kind vertical rhythm — padding, not margin, so the spine stays continuous. */
+.tl-row--user      { padding-top: 6px; padding-bottom: 12px; }
+.tl-row--assistant { padding-top: 2px; padding-bottom: 12px; }
+.tl-row--tool      { padding-top: 0;   padding-bottom: 0; }
+.tl-row--thinking  { padding-top: 2px; padding-bottom: 4px; }
+.tl-row--step      { padding-top: 4px; padding-bottom: 4px; }
+.tl-row--decision  { padding-top: 6px; padding-bottom: 12px; }
+.tl-row--group     { padding-top: 6px; padding-bottom: 2px; }
+
+/* ---- node dots ---- */
+
+.tl-row__dot {
+    position: absolute;
+}
+
+.tl-dot--user {
+    left: 3px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--aifam-accent);
+}
+
+.tl-dot--assistant {
+    left: 3px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--aifam-bg-root);
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: var(--aifam-accent);
+    border-bottom-color: var(--aifam-accent);
+    border-left-color: var(--aifam-accent);
+    border-right-color: var(--aifam-accent);
+}
+
+.tl-dot--tool {
+    left: 5px;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--aifam-text-faint);
+}
+
+.tl-dot--thinking,
+.tl-dot--group {
+    left: 4px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: var(--aifam-bg-root);
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: var(--aifam-text-faint);
+    border-bottom-color: var(--aifam-text-faint);
+    border-left-color: var(--aifam-text-faint);
+    border-right-color: var(--aifam-text-faint);
+}
+
+.tl-dot--step {
+    left: 4px;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: var(--aifam-text-faint);
+}
+
+.tl-dot--decision {
+    left: 3px;
+    top: 12px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--aifam-accent-subtle);
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: var(--aifam-accent);
+    border-bottom-color: var(--aifam-accent);
+    border-left-color: var(--aifam-accent);
+    border-right-color: var(--aifam-accent);
+}
+
+/* State tints — only tool / step dots recolor with lifecycle state; the compound
+   selectors keep the modifier classes inert on every other dot kind. Defined after
+   the kind rules so equal-origin ordering resolves in their favor. */
+.tl-dot--tool.tl-dot--st-running,
+.tl-dot--step.tl-dot--st-running {
+    background-color: var(--aifam-accent);
+}
+
+.tl-dot--tool.tl-dot--st-succeeded,
+.tl-dot--step.tl-dot--st-succeeded {
+    background-color: var(--aifam-success);
+}
+
+.tl-dot--tool.tl-dot--st-failed,
+.tl-dot--step.tl-dot--st-failed {
+    background-color: var(--aifam-error);
+}
+
+.tl-dot--tool.tl-dot--st-blocked,
+.tl-dot--step.tl-dot--st-blocked,
+.tl-dot--tool.tl-dot--st-timed-out,
+.tl-dot--step.tl-dot--st-timed-out {
+    background-color: var(--aifam-warning);
+}
+
+/* ---- captions ("YOU" / "AI FAMILIAR" / group label) ---- */
+
+.tl-caption-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.tl-caption {
+    font-size: 10px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    color: var(--aifam-text-faint);
+}
+
+.tl-caption--user {
+    color: var(--aifam-accent);
+}
+
+.tl-caption__time {
+    font-size: 10px;
+    color: var(--aifam-text-faint);
+    margin-left: 8px;
+}
+
+.tl-group-label {
+    font-size: 10px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    color: var(--aifam-text-faint);
+}
+
+/* ================= Card shell (quiet default) ================= */
+
 .activity-card {
     flex-direction: column;
-    border-radius: 6px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-color: var(--aifam-border);
-    border-bottom-color: var(--aifam-border);
-    border-left-color: var(--aifam-border);
-    border-right-color: var(--aifam-border);
-    background-color: var(--aifam-surface-raised);
-    margin-top: 4px;
-    margin-bottom: 4px;
-    overflow: hidden;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /* ---- Header ---- */
 .activity-card__header {
     flex-direction: row;
     align-items: center;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 0;
+    padding-right: 4px;
     cursor: link;
     flex-shrink: 0;
 }
 
-/* ---- Icon ---- */
+/* Icon element retired in the timeline look — dots on the spine carry identity. */
 .activity-card__icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    -unity-text-align: middle-center;
-    color: var(--aifam-text-muted);
+    display: none;
 }
 
 /* ---- Title ---- */
 .activity-card__title {
-    flex-grow: 1;
     flex-shrink: 1;
     min-width: 0;
     font-size: 12px;
-    -unity-font-style: bold;
+    -unity-font-style: normal;
     color: var(--aifam-text-secondary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-/* ---- State badge slot ---- */
+/* ---- Inline header result (right-aligned outcome, e.g. "Found 14 files") ---- */
+.activity-card__header-result {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-left: 12px;
+    font-size: 11px;
+    color: var(--aifam-text-faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -unity-text-align: middle-right;
+}
+
+.activity-card__header-result--error {
+    color: var(--aifam-error);
+}
+
+/* ---- State badge slot — hidden on quiet rows (the dot carries state) ---- */
 .activity-card__badge-slot {
+    display: none;
     width: 18px;
     height: 18px;
     flex-shrink: 0;
@@ -93,12 +281,10 @@
 /* ---- Body ---- */
 .activity-card__body {
     flex-direction: column;
-    padding-top: 8px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-top-width: 1px;
-    border-top-color: var(--aifam-border);
+    padding-top: 2px;
+    padding-bottom: 6px;
+    padding-left: 0;
+    padding-right: 4px;
 }
 
 /* Long card detail (e.g. a full API error message) rendered in the body: the header
@@ -109,6 +295,19 @@
     color: var(--aifam-text-secondary);
 }
 
+/* "▸ Details" foldout toggle above the detail text — collapsed by default so tool
+   cards stay one humanized line tall until the user asks for more. */
+.activity-card__details-toggle {
+    font-size: 11px;
+    color: var(--aifam-text-faint);
+    cursor: link;
+    margin-top: 4px;
+}
+
+.activity-card__details-toggle:hover {
+    color: var(--aifam-text-muted);
+}
+
 /* ============================================================
    Modifier: collapsed
    ============================================================ */
@@ -116,54 +315,81 @@
     display: none;
 }
 
-.activity-card--collapsed .activity-card__chevron {
-    /* Unicode RIGHT-POINTING SMALL TRIANGLE — set via C# text property */
+/* ============================================================
+   Modifier: boxed — decision cards (plan, recommendation, approval,
+   clarifying question, summaries) keep a framed look so the one thing
+   that needs the user's decision stands out on the quiet spine.
+   ============================================================ */
+.activity-card--boxed {
+    border-radius: 8px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: var(--aifam-border-strong);
+    border-bottom-color: var(--aifam-border-strong);
+    border-left-color: var(--aifam-border-strong);
+    border-right-color: var(--aifam-border-strong);
+    margin-top: 2px;
+    margin-bottom: 2px;
+    overflow: hidden;
+}
+
+.activity-card--boxed .activity-card__header {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 12px;
+    padding-right: 10px;
+}
+
+.activity-card--boxed .activity-card__title {
+    flex-grow: 1;
+    -unity-font-style: bold;
+    color: var(--aifam-text-primary);
+}
+
+.activity-card--boxed .activity-card__badge-slot {
+    display: flex;
+}
+
+.activity-card--boxed .activity-card__body {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-top-width: 1px;
+    border-top-color: var(--aifam-border);
 }
 
 /* ============================================================
-   State modifiers — left accent stripe via left border override.
-   Base border is 1px; accent uses 3px on the left side only.
+   State modifiers — the left accent stripe is retired (the spine dot
+   carries state); only textual emphasis remains.
    ============================================================ */
 
-/* Pending: muted gray — no stripe, just dimmed border */
-.activity-card--pending {
-    border-left-color: var(--aifam-border-strong);
-    border-left-width: 3px;
+.activity-card--failed .activity-card__title {
+    color: var(--aifam-error);
 }
 
-/* Running: blue accent */
-.activity-card--running {
-    border-left-color: var(--aifam-accent);
-    border-left-width: 3px;
-}
-
-/* Blocked: amber — waiting on user */
-.activity-card--blocked {
-    border-left-color: var(--aifam-warning);
-    border-left-width: 3px;
-}
-
-/* Succeeded: green */
-.activity-card--succeeded {
-    border-left-color: var(--aifam-success);
-    border-left-width: 3px;
-}
-
-/* Failed: red */
-.activity-card--failed {
-    border-left-color: var(--aifam-error);
-    border-left-width: 3px;
-}
-
-/* Skipped: dim gray */
 .activity-card--skipped {
-    border-left-color: var(--aifam-text-faint);
-    border-left-width: 3px;
-    opacity: 0.7;
+    opacity: 0.75;
 }
 
-/* TimedOut: amber + slightly elevated opacity so it reads as a warning */
-.activity-card--timed-out {
-    border-left-color: var(--aifam-warning);
-    border-left-width: 3px;
+/* ============================================================
+   Primary action button (Approve & Execute / Take action)
+   ============================================================ */
+.aifam-btn-primary {
+    background-color: var(--aifam-accent);
+    color: var(--aifam-on-accent);
+    border-top-color: var(--aifam-accent);
+    border-bottom-color: var(--aifam-accent);
+    border-left-color: var(--aifam-accent);
+    border-right-color: var(--aifam-accent);
+}
+
+.aifam-btn-primary:hover {
+    background-color: var(--aifam-accent-soft);
+    border-top-color: var(--aifam-accent-soft);
+    border-bottom-color: var(--aifam-accent-soft);
+    border-left-color: var(--aifam-accent-soft);
+    border-right-color: var(--aifam-accent-soft);
 }

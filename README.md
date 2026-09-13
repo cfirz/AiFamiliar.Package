@@ -153,10 +153,10 @@ Anthropic enforces an input-tokens-per-minute limit that varies by account tier.
 If you have a higher Anthropic tier, you can raise `rateLimitBudgetTpm` to match your actual limit, or disable individual mitigations in Settings.
 
 ### How It Works (Unified Assistant)
-There is no mode to choose. Just type what you want — the assistant investigates your project with read-only tools first, then responds one of three ways, and **nothing is changed until you click a button**:
+There is no mode to choose. Just type what you want — the assistant investigates your project with read-only tools first (it can also dry-run the scene or asset change it's considering, verifying targets and current values without touching anything), then responds one of three ways, and **nothing is changed until you click a button**:
 - **Answer** — for questions and explanations: a normal reply, nothing to approve.
 - **Direct action** — for a small, single change: a lightweight card with **Take action** (applies the change, then you accept or reject the diff) and **Make a plan instead**.
-- **Plan** — for multi-step work: a plan card with **Approve / Revise / Reject**. By default, execution pauses at every file-change step for your approval; turn on the **Auto-approve** toggle to apply file changes without pausing (you can still review or revert individual files afterwards).
+- **Plan** — for multi-step work: a plan card with **Approve / Revise / Reject**. By default, execution pauses at every file-change step for your approval; turn on the **Auto-approve** toggle to apply file changes without pausing (you can still review or revert individual files afterwards). Each step's scene changes are grouped into a single Undo entry, so one Ctrl+Z reverts the whole step. You can also pause a running plan from its progress bar — execution holds after the current step and the same button resumes it (a pause survives script recompiles).
 - **Tool access**: With a tool-capable model selected and Settings ▸ Native Tool Use enabled (default), the assistant reads project files, inspects/modifies the scene, runs tests, and manages packages. Local (LM Studio) models can join in too — enable **Use Native Tools for Local** in Settings ▸ Execution (requires a function-calling-capable model).
 
 ### Session Management
