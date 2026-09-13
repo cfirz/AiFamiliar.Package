@@ -19,6 +19,9 @@ Why not just use a desktop AI coding tool with a free Unity MCP bridge?
 
 ## Features
 
+<details>
+<summary><b>Show the full feature list</b></summary>
+
 - **Integrated Chat Interface**: Chat with AI directly inside Unity Editor
 - **Persistent Chat Sessions**: Full conversation history with execution plan persistence. Resume interrupted tasks, review past executions, and continue conversations seamlessly across Unity sessions and domain reloads
 - **Modern UX**: Slash commands (`/fix`, `/explain`, `/test`, plus local `/compact`, `/context`, and `/new-chat` that execute on Enter), a fuzzy `@`-mention picker (type `@` to search scripts, scenes, prefabs, materials, text assets, folders, and scene GameObjects, ranked as you type — pick one, or type a path yourself), inline diff view, model selector, execution progress rail, keyboard shortcuts, conversation history sidebar, **conversation tabs** for switching between open conversations, a card-based **Activity Transcript** with an ambient status rail, and optional **clarifying-question** + **plan-summary** cards so the agent can confirm intent before acting
@@ -81,6 +84,8 @@ Why not just use a desktop AI coding tool with a free Unity MCP bridge?
   - **Light & Dark Editor Theme**: The window and every surface it opens (settings, setup wizard, diff viewer, message bubbles, cards, pickers) follow Unity's Editor Theme (Preferences ▸ General ▸ Editor Theme). Switch themes and reopen the window to apply.
   - **Post-Update Setup Check**: After importing a new version, a quick setup health scan runs automatically and opens a Setup Check window with one-click fixes if anything needs attention — missing .gitignore protection, no API key configured, a stale default model, duplicate plugin copies, and more. Run it anytime via **Tools ▸ AI Familiar ▸ Run Setup Check**.
   - **LLM request/response logging**: Proxy logs request metadata and collected responses for debugging
+
+</details>
 
 ## Installation
 
