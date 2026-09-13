@@ -103,7 +103,16 @@ Git-based UPM installs are treated as *immutable* by Unity, so the package ships
 
 ### First run
 
-A **setup wizard** opens automatically the first time you open the window (if no API key is configured yet). Follow the three steps — pick a provider, paste your key, and click **Test Connection** — then click **Get started** to begin chatting. You can reopen the wizard at any time via **Tools ▸ AI Familiar ▸ Setup Wizard** or the **Run setup wizard** button in Settings ▸ Keys. The wizard also offers a **zero-cost path** — a guided free **Local (LM Studio)** option and per-provider key-creation links, with **Google Gemini's free tier** highlighted as the fastest no-cost cloud start.
+A **setup wizard** opens automatically the first time you open the window (if no API key is configured yet). 
+Follow the three steps: 
+1. Pick a provider
+2. Paste your provider's key
+3. Click **Test Connection** or **Get started** to begin chatting.
+
+You can reopen the wizard at any time via **Tools ▸ AI Familiar ▸ Setup Wizard**. 
+The wizard also offers a **zero-cost path**, a guided free **Local (LM Studio)** option. 
+**Google Gemini's free tier** highlighted as the fastest no-cost cloud start.
+
 
 **Requirements**: Unity 6.0 or newer. The plugin is Editor-only and is excluded from builds automatically.
 
