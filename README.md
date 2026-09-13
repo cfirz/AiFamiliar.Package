@@ -84,7 +84,7 @@ Why not just use a desktop AI coding tool with a free Unity MCP bridge?
 
 ## Installation
 
-Three ways to install. The `.unitypackage` route is the simplest and needs nothing but the Editor.
+Two ways to install. The `.unitypackage` route is the simplest and needs nothing but the Editor.
 
 ### Option 1: `.unitypackage` from the GitHub release
 
@@ -100,10 +100,6 @@ Three ways to install. The `.unitypackage` route is the simplest and needs nothi
 3. Open the window via **Window ▸ AI Familiar**.
 
 Git-based UPM installs are treated as *immutable* by Unity, so the package ships with all its `.meta` files (including folder metas and `package.json.meta`). If you ever repackage it yourself, keep them, or Unity logs `... has no meta file, but it's in an immutable folder. The asset will be ignored.`
-
-### Option 3: Unity Asset Store
-
-Install it from **Window ▸ Package Manager ▸ My Assets** like any other asset. It imports as a `.unitypackage`, so the Updating notes below for that route apply.
 
 ### First run
 
