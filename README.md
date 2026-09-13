@@ -84,12 +84,32 @@ Why not just use a desktop AI coding tool with a free Unity MCP bridge?
 
 ## Installation
 
-1. Clone or download this repository into your Unity project's `Assets` folder (or install via UPM if packaged).
-2. Open Unity Editor.
-3. Go to `Window > AI Familiar` to open the window.
-4. A **setup wizard** opens automatically on first launch (if no API key is configured yet). Follow the three steps — pick a provider, paste your key, and click **Test Connection** — then click **Get started** to begin chatting. You can reopen the wizard at any time via **Tools ▸ AI Familiar ▸ Setup Wizard** or the **Run setup wizard** button in Settings ▸ Keys. The wizard also offers a **zero-cost path** — a guided free **Local (LM Studio)** option and per-provider key-creation links, with **Google Gemini's free tier** highlighted as the fastest no-cost cloud start.
+Three ways to install. The `.unitypackage` route is the simplest and needs nothing but the Editor.
 
-**UPM (Git URL) note**: Git-based UPM installs are treated as *immutable* by Unity. Your UPM package must include `.meta` files (including folder metas and `package.json.meta`), otherwise Unity will log errors like `... has no meta file, but it's in an immutable folder. The asset will be ignored.`
+### Option 1: `.unitypackage` from the GitHub release (recommended while the Asset Store listing is in review)
+
+1. Download the latest `AiFamiliar_vX.Y.Z.unitypackage` from the [Releases page](https://github.com/cfirz/AiFamiliar.Package/releases/latest). The same file is also committed at the root of the repository.
+2. With your project open in the Unity Editor, go to **Assets ▸ Import Package ▸ Custom Package…** and pick the downloaded file (or double-click the file, or drag it into the Project window).
+3. Leave everything ticked in the import dialog and click **Import**. The plugin lands in `Assets/AiFamiliar/`.
+4. Open the window via **Window ▸ AI Familiar**.
+
+### Option 2: Unity Package Manager (Git URL)
+
+1. In the Editor, open **Window ▸ Package Manager**, click **+** ▸ **Add package from git URL…**
+2. Paste `https://github.com/cfirz/AiFamiliar.Package.git` and click **Add**. To pin a version, append a tag: `https://github.com/cfirz/AiFamiliar.Package.git#v1.51.0`.
+3. Open the window via **Window ▸ AI Familiar**.
+
+Git-based UPM installs are treated as *immutable* by Unity, so the package ships with all its `.meta` files (including folder metas and `package.json.meta`). If you ever repackage it yourself, keep them, or Unity logs `... has no meta file, but it's in an immutable folder. The asset will be ignored.`
+
+### Option 3: Unity Asset Store
+
+Once the listing is live, install it from **Window ▸ Package Manager ▸ My Assets** like any other asset. It imports as a `.unitypackage`, so the Updating notes below for that route apply.
+
+### First run
+
+A **setup wizard** opens automatically the first time you open the window (if no API key is configured yet). Follow the three steps — pick a provider, paste your key, and click **Test Connection** — then click **Get started** to begin chatting. You can reopen the wizard at any time via **Tools ▸ AI Familiar ▸ Setup Wizard** or the **Run setup wizard** button in Settings ▸ Keys. The wizard also offers a **zero-cost path** — a guided free **Local (LM Studio)** option and per-provider key-creation links, with **Google Gemini's free tier** highlighted as the fastest no-cost cloud start.
+
+**Requirements**: Unity 6.0 or newer. The plugin is Editor-only and is excluded from builds automatically.
 
 ## Updating
 
