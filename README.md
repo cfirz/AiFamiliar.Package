@@ -111,7 +111,7 @@ Follow the three steps:
 
 You can reopen the wizard at any time via **Tools ▸ AI Familiar ▸ Setup Wizard**. 
 The wizard also offers a **zero-cost path**, a guided free **Local (LM Studio)** option. 
-**Google Gemini's free tier** highlighted as the fastest no-cost cloud start.
+**Google Gemini's free tier** is highlighted as the fastest no-cost cloud start.
 
 
 **Requirements**: Unity 6.0 or newer. The plugin is Editor-only and is excluded from builds automatically.
