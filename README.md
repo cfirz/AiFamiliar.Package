@@ -6,6 +6,32 @@ A powerful AI development assistant integrated directly into the Unity Editor �
 
 **No subscription. No credits. No markup.** Bring your own API key for the major cloud AI providers or run a free local model — you pay your provider directly and see real per-message costs in-editor. It's a development assistant for your Editor workflow, **not** a runtime SDK for adding AI to your shipped game.
 
+<details>
+<summary><b>Contents</b></summary>
+
+- [Why AI Familiar?](#why-ai-familiar)
+- [Features](#features)
+- [Installation](#installation)
+  - [Option 1: .unitypackage from the GitHub release](#option-1-unitypackage-from-the-github-release)
+  - [Option 2: Unity Package Manager (Git URL)](#option-2-unity-package-manager-git-url)
+  - [First run](#first-run)
+- [Updating](#updating)
+- [Configuration](#configuration)
+  - [API Keys](#api-keys)
+  - [About Tab](#about-tab)
+  - [Connection Mode (Settings ▸ Proxy Configuration)](#connection-mode-settings--proxy-configuration)
+  - [Proxy (Optional - AWS Lambda)](#proxy-optional---aws-lambda)
+  - [Reasoning Controls (Optional)](#reasoning-controls-optional)
+  - [Rate-Limit Mitigation (Claude Users)](#rate-limit-mitigation-claude-users)
+  - [How It Works (Unified Assistant)](#how-it-works-unified-assistant)
+  - [Session Management](#session-management)
+- [What the Assistant Can Do](#what-the-assistant-can-do)
+- [Requirements](#requirements)
+- [Support](#support)
+- [License](#license)
+
+</details>
+
 ## Why AI Familiar?
 
 Why not just use a desktop AI coding tool with a free Unity MCP bridge?
