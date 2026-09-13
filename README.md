@@ -86,7 +86,7 @@ Why not just use a desktop AI coding tool with a free Unity MCP bridge?
 
 Three ways to install. The `.unitypackage` route is the simplest and needs nothing but the Editor.
 
-### Option 1: `.unitypackage` from the GitHub release (recommended while the Asset Store listing is in review)
+### Option 1: `.unitypackage` from the GitHub release
 
 1. Download the latest `AiFamiliar_vX.Y.Z.unitypackage` from the [Releases page](https://github.com/cfirz/AiFamiliar.Package/releases/latest). The same file is also committed at the root of the repository.
 2. With your project open in the Unity Editor, go to **Assets ▸ Import Package ▸ Custom Package…** and pick the downloaded file (or double-click the file, or drag it into the Project window).
@@ -103,7 +103,7 @@ Git-based UPM installs are treated as *immutable* by Unity, so the package ships
 
 ### Option 3: Unity Asset Store
 
-Once the listing is live, install it from **Window ▸ Package Manager ▸ My Assets** like any other asset. It imports as a `.unitypackage`, so the Updating notes below for that route apply.
+Install it from **Window ▸ Package Manager ▸ My Assets** like any other asset. It imports as a `.unitypackage`, so the Updating notes below for that route apply.
 
 ### First run
 
